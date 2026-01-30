@@ -163,7 +163,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                 <span className="text-foreground">MIT</span>
               </div>
               <div className="flex justify-between text-xs md:text-sm">
-                <span className="text-muted-foreground">Créditos::</span>
+                <span className="text-muted-foreground">Criado por:</span>
                 <span className="text-foreground">​Luna e Eduardo</span>
               </div>
             </div>

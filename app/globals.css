@@ -1,0 +1,565 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* ============================================
+   🎨 ARCANA DESIGN SYSTEM
+   ============================================ */
+
+:root {
+  /* Base Colors - Tailwind Defaults */
+  --background: oklch(0.05 0.02 280);
+  --foreground: oklch(0.95 0.01 280);
+  --card: oklch(0.12 0.02 280);
+  --card-foreground: oklch(0.95 0.01 280);
+  --popover: oklch(0.1 0.02 280);
+  --popover-foreground: oklch(0.95 0.01 280);
+  --primary: oklch(0.6 0.2 300);
+  --primary-foreground: oklch(0.98 0.01 280);
+  --secondary: oklch(0.2 0.03 280);
+  --secondary-foreground: oklch(0.95 0.01 280);
+  --muted: oklch(0.2 0.02 280);
+  --muted-foreground: oklch(0.65 0.02 280);
+  --accent: oklch(0.7 0.15 190);
+  --accent-foreground: oklch(0.1 0.02 280);
+  --destructive: oklch(0.55 0.22 25);
+  --destructive-foreground: oklch(0.98 0.01 280);
+  --border: oklch(0.3 0.08 300);
+  --input: oklch(0.15 0.02 280);
+  --ring: oklch(0.6 0.2 300);
+  
+  /* Chart Colors */
+  --chart-1: oklch(0.65 0.2 300);
+  --chart-2: oklch(0.7 0.15 190);
+  --chart-3: oklch(0.6 0.15 330);
+  --chart-4: oklch(0.75 0.12 150);
+  --chart-5: oklch(0.8 0.1 60);
+  
+  /* Border Radius */
+  --radius: 0.75rem;
+  
+  /* Sidebar */
+  --sidebar: oklch(0.08 0.02 280);
+  --sidebar-foreground: oklch(0.95 0.01 280);
+  --sidebar-primary: oklch(0.6 0.2 300);
+  --sidebar-primary-foreground: oklch(0.98 0.01 280);
+  --sidebar-accent: oklch(0.15 0.03 280);
+  --sidebar-accent-foreground: oklch(0.95 0.01 280);
+  --sidebar-border: oklch(0.25 0.06 300);
+  --sidebar-ring: oklch(0.6 0.2 300);
+
+  /* ============================================
+     ✨ ARCANA THEME COLORS
+     ============================================ */
+  --arcana-bg: #050008;
+  --arcana-bg-secondary: #0a0514;
+  --arcana-purple: #9333ea;
+  --arcana-purple-light: #a855f7;
+  --arcana-purple-dark: #7e22ce;
+  --arcana-pink: #d946ef;
+  --arcana-pink-light: #ec4899;
+  --arcana-cyan: #22d3ee;
+  --arcana-cyan-light: #67e8f9;
+  --arcana-dark: #1a0a2e;
+  --arcana-darker: #0f0a1a;
+  --arcana-card-bg: rgba(20, 10, 40, 0.6);
+  --arcana-glass: rgba(26, 15, 46, 0.7);
+
+  /* Neon Glow Effects */
+  --glow-purple: 0 0 20px rgba(147, 51, 234, 0.5);
+  --glow-pink: 0 0 20px rgba(236, 72, 153, 0.5);
+  --glow-cyan: 0 0 20px rgba(34, 211, 238, 0.5);
+  --glow-purple-strong: 0 0 40px rgba(147, 51, 234, 0.8);
+  
+  /* Spacing & Timing */
+  --transition-fast: 150ms;
+  --transition-normal: 300ms;
+  --transition-slow: 500ms;
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+@theme inline {
+  /* Font Families */
+  --font-sans: "Geist", "Geist Fallback", system-ui, -apple-system, sans-serif;
+  --font-mono: "Geist Mono", "Geist Mono Fallback", "Fira Code", "Cascadia Code", monospace;
+  
+  /* Color Mappings */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  
+  /* Border Radius Tokens */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  
+  /* Sidebar Colors */
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Arcana Theme Colors for Tailwind */
+  --color-arcana-bg: var(--arcana-bg);
+  --color-arcana-bg-secondary: var(--arcana-bg-secondary);
+  --color-arcana-purple: var(--arcana-purple);
+  --color-arcana-purple-light: var(--arcana-purple-light);
+  --color-arcana-purple-dark: var(--arcana-purple-dark);
+  --color-arcana-pink: var(--arcana-pink);
+  --color-arcana-pink-light: var(--arcana-pink-light);
+  --color-arcana-cyan: var(--arcana-cyan);
+  --color-arcana-cyan-light: var(--arcana-cyan-light);
+  --color-arcana-dark: var(--arcana-dark);
+  --color-arcana-darker: var(--arcana-darker);
+  --color-arcana-card-bg: var(--arcana-card-bg);
+  --color-arcana-glass: var(--arcana-glass);
+}
+
+/* ============================================
+   🎯 BASE STYLES
+   ============================================ */
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+  body {
+    @apply bg-arcana-bg text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: rgba(147, 51, 234, 0.3);
+    color: #ffffff;
+  }
+
+  ::-moz-selection {
+    background-color: rgba(147, 51, 234, 0.3);
+    color: #ffffff;
+  }
+}
+
+/* ============================================
+   📜 CUSTOM SCROLLBAR
+   ============================================ */
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(147, 51, 234, 0.4) transparent;
+}
+
+/* Webkit (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(147, 51, 234, 0.3);
+  border-radius: 4px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  transition: background var(--transition-normal) var(--ease-out);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(147, 51, 234, 0.5);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-thumb:active {
+  background: rgba(147, 51, 234, 0.7);
+  background-clip: padding-box;
+}
+
+/* Scrollbar Corner */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* ============================================
+   🎭 ANIMATIONS & TRANSITIONS
+   ============================================ */
+
+/* Smooth transitions by default */
+* {
+  transition-timing-function: var(--ease-out);
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Custom Animations */
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: var(--glow-purple);
+    opacity: 1;
+  }
+  50% {
+    box-shadow: var(--glow-purple-strong);
+    opacity: 0.8;
+  }
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* ============================================
+   💎 UTILITY CLASSES
+   ============================================ */
+
+@layer utilities {
+  /* Glass morphism */
+  .glass {
+    background: var(--arcana-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  /* Neon glow effects */
+  .glow-purple {
+    box-shadow: var(--glow-purple);
+  }
+
+  .glow-pink {
+    box-shadow: var(--glow-pink);
+  }
+
+  .glow-cyan {
+    box-shadow: var(--glow-cyan);
+  }
+
+  /* Text glow */
+  .text-glow-purple {
+    text-shadow: 0 0 20px rgba(147, 51, 234, 0.8);
+  }
+
+  .text-glow-pink {
+    text-shadow: 0 0 20px rgba(236, 72, 153, 0.8);
+  }
+
+  .text-glow-cyan {
+    text-shadow: 0 0 20px rgba(34, 211, 238, 0.8);
+  }
+
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #d946ef 0%, #a855f7 50%, #22d3ee 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Hide scrollbar */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  /* Custom focus ring */
+  .focus-ring {
+    @apply outline-none ring-2 ring-arcana-purple ring-offset-2 ring-offset-arcana-bg;
+  }
+}
+
+/* ============================================
+   💻 CODE SYNTAX HIGHLIGHTING
+   ============================================ */
+
+.hljs {
+  background: transparent !important;
+  color: #abb2bf;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  line-height: 1.6;
+}
+
+/* Keywords & Built-ins */
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-built_in,
+.hljs-name,
+.hljs-tag {
+  color: #c678dd;
+  font-weight: 500;
+}
+
+/* Strings & Attributes */
+.hljs-string,
+.hljs-attr,
+.hljs-quote,
+.hljs-doctag {
+  color: #98c379;
+}
+
+/* Numbers & Literals */
+.hljs-number,
+.hljs-literal,
+.hljs-regexp {
+  color: #d19a66;
+}
+
+/* Comments */
+.hljs-comment,
+.hljs-meta {
+  color: #5c6370;
+  font-style: italic;
+  opacity: 0.8;
+}
+
+/* Functions & Titles */
+.hljs-function,
+.hljs-title,
+.hljs-section,
+.hljs-class .hljs-title {
+  color: #61afef;
+  font-weight: 500;
+}
+
+/* Variables & Parameters */
+.hljs-variable,
+.hljs-params,
+.hljs-template-variable {
+  color: #e06c75;
+}
+
+/* Types & Classes */
+.hljs-type,
+.hljs-class,
+.hljs-built_in {
+  color: #e5c07b;
+}
+
+/* Operators & Symbols */
+.hljs-operator,
+.hljs-symbol,
+.hljs-bullet {
+  color: #56b6c2;
+}
+
+/* Deleted & Inserted (for diffs) */
+.hljs-deletion {
+  color: #e06c75;
+  background-color: rgba(224, 108, 117, 0.1);
+}
+
+.hljs-addition {
+  color: #98c379;
+  background-color: rgba(152, 195, 121, 0.1);
+}
+
+/* Emphasis */
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+/* Links */
+.hljs-link {
+  color: #61afef;
+  text-decoration: underline;
+}
+
+/* ============================================
+   🎨 COMPONENT SPECIFIC STYLES
+   ============================================ */
+
+/* Card hover effect */
+.card-hover {
+  transition: all var(--transition-normal) var(--ease-out);
+}
+
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 30px rgba(147, 51, 234, 0.3);
+}
+
+/* Button pulse animation */
+.btn-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* Loading spinner */
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+/* Skeleton loader */
+@keyframes skeleton-loading {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.05) 0px,
+    rgba(255, 255, 255, 0.1) 40px,
+    rgba(255, 255, 255, 0.05) 80px
+  );
+  background-size: 200px 100%;
+  animation: skeleton-loading 1.2s ease-in-out infinite;
+}
+
+/* ============================================
+   📱 RESPONSIVE HELPERS
+   ============================================ */
+
+@media (max-width: 640px) {
+  :root {
+    --radius: 0.5rem;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .card-hover:hover {
+    transform: none;
+  }
+
+  button,
+  a {
+    -webkit-tap-highlight-color: rgba(147, 51, 234, 0.2);
+  }
+}
+
+/* Print styles */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .no-print {
+    display: none !important;
+  }
+}

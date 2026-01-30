@@ -164,9 +164,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               </div>
               <div className="flex justify-between text-xs md:text-sm">
                 <span className="text-muted-foreground">Créditos::</span>
-                <span className="text-foreground">​Idealização e Direção de Produto: Eduardo (Edu)
-​Conceito Visual e Design de Interface (UI/UX): Luna (IA)
-​Desenvolvimento e Lógica de Sistema: Claude Opus (IA)</span>
+                <span className="text-foreground">​Luna e Eduardo</span>
               </div>
             </div>
           </section>

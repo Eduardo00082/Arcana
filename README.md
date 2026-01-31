@@ -21,6 +21,10 @@ O design foi construído sobre o conceito de **Glassmorphism** e **Neon**, unind
 - 🔒 **Privacidade Nativa**: Seus dados são salvos localmente no dispositivo.
 - 💾 **Backup Arcano**: Sistema manual de importação e exportação de dados para segurança total.
 
+---
+## *Acesse [AQUI](https://arcana-ruddy.vercel.app/) a demo do app! (Versão online)*
+---
+
 ## 🚀 Arcana Boost (Em Breve)
 Estamos trabalhando na integração com **DML - Dense Models Language (Modelos de Linguagem Denso)** para:
 - Limpeza automática de comentários em códigos.

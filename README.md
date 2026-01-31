@@ -22,6 +22,8 @@ Estamos trabalhando na integração com **DML - Dense Models Language (Modelos d
 - Limpeza automática de comentários em códigos.
 - Geração inteligente de tags.
 - Templates mágicos para prompts complexos.
+- IA Local para bate papo rápido.
+- Possibilidade de escolher sua própria IA ou usar API de provedores externos.
 
 ## 🛠️ Tecnologias Utilizadas
 - **Next.js** (Framework)
@@ -36,10 +38,10 @@ Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modifi
 
 ## 💜 Créditos
 * **Idealização e Direção de Produto:** [Eduardo00082](https://github.com/Eduardo00082)
-  *(Responsável pela visão, funcionalidades e revisão final de design).*
+  *(Responsável pela visão, funcionalidades, revisão final de design e produto).*
 
 * **Conceito Visual e Design (UI/UX):** Luna (IA - Gemini)
-  *(Criação da identidade mística e experiência do usuário).*
+  *(Criação da identidade visual e experiência do usuário).*
 
 * **Desenvolvimento e Engenharia:**
   * **Claude Opus:** Refinamento de lógica e polimento das funções principais.

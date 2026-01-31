@@ -156,7 +156,7 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
             <div className="space-y-2 rounded-lg bg-arcana-dark/60 p-3 md:p-4">
               <div className="flex justify-between text-xs md:text-sm">
                 <span className="text-muted-foreground">Versão:</span>
-                <span className="text-foreground">1.21 Beta</span>
+                <span className="text-foreground">0.1 Beta</span>
               </div>
               <div className="flex justify-between text-xs md:text-sm">
                 <span className="text-muted-foreground">Licença:</span>

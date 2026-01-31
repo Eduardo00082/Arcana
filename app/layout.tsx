@@ -11,23 +11,15 @@ const _geistMono = Geist_Mono({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "ARCANA - Seu espaço pessoal de código",
   description: "Gerencie seus snippets e fragmentos de código de forma local e privada",
-  generator: "v0.app",
+  // ✂️ Removi o generator: "v0.app"
   icons: {
     icon: [
       {
-        url: "/icon-light-32x32.png",
-        media: "(prefers-color-scheme: light)",
-      },
-      {
-        url: "/icon-dark-32x32.png",
-        media: "(prefers-color-scheme: dark)",
-      },
-      {
-        url: "/icon.svg",
-        type: "image/svg+xml",
+        url: "/images/logo-do-app.jpg", // Nossa logo oficial!
+        type: "image/jpeg",
       },
     ],
-    apple: "/apple-icon.png",
+    apple: "/images/logo-do-app.jpg",
   },
 }
 

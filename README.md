@@ -1,4 +1,8 @@
-# 🃏 Arcana — Seu Grimório Digital (v0.1.2-Beta)
+<div align="center">
+  <img src="./public/images/logo-do-app.jpg" alt="Arcana Logo" width="250" style="border-radius: 20px;">
+
+# Seu Grimório Digital (v0.1.2-Beta)
+</div>
 
 O **Arcana** é um ambiente imersivo e privado projetado para desenvolvedores e Prompt Engineers que buscam organizar seu trabalho (snippets, lógicas e prompts) com segurança absoluta. Diferente de outras ferramentas, o Arcana é **100% Offline-First**, garantindo que seus dados nunca saiam do seu dispositivo.
 
@@ -14,7 +18,7 @@ O design foi construído sobre o conceito de **Glassmorphism** e **Neon**, unind
 - 🗂️ **Organização por Tags**: Filtre suas cartas instantaneamente por linguagem (TS, PY, SQL) ou categoria.
 - 🔄 **Animação de Flip**: Visualize o código na frente e detalhes técnicos no verso da carta.
 - 🛠️ **Editor de Snippets**: Realce de sintaxe profissional e contador de caracteres para produtividade.
-- 🔒 **Privacidade Nativa**: Seus dados são salvos localmente no navegador (SQLite/IndexedDB).
+- 🔒 **Privacidade Nativa**: Seus dados são salvos localmente no dispositivo.
 - 💾 **Backup Arcano**: Sistema manual de importação e exportação de dados para segurança total.
 
 ## 🚀 Arcana Boost (Em Breve)
@@ -38,7 +42,7 @@ Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modifi
 
 ## 💜 Créditos
 * **Idealização e Direção de Produto:** [Eduardo00082](https://github.com/Eduardo00082)
-  *(Responsável pela visão, funcionalidades, revisão final de design e produto).*
+  *(Responsável pela visão do projeto, funcionalidades, revisão final de design e produto).*
 
 * **Conceito Visual e Design (UI/UX):** Luna (IA - Gemini)
   *(Criação da identidade visual e experiência do usuário).*

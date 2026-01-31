@@ -192,7 +192,7 @@ export function DeckContent() {
                 }}
               >
                 {[
-                  { label: "Versão", value: "1.0" },
+                  { label: "Versão", value: "0.1" },
                   { label: "Licença", value: "MIT" },
                   { label: "Storage", value: "Local" },
                 ].map((info, index) => (

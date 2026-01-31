@@ -1,4 +1,4 @@
-# 🃏 Arcana — Seu Grimório Digital (v1.21 Beta)
+# 🃏 Arcana — Seu Grimório Digital (v0.1.2-Beta)
 
 O **Arcana** é um ambiente imersivo e privado projetado para desenvolvedores e Prompt Engineers que buscam organizar seu trabalho (snippets, lógicas e prompts) com segurança absoluta. Diferente de outras ferramentas, o Arcana é **100% Offline-First**, garantindo que seus dados nunca saiam do seu dispositivo.
 

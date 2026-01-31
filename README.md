@@ -32,12 +32,19 @@ Estamos trabalhando na integração com **DML - Dense Models Language (Modelos d
 ---
 
 ## ⚖️ Licença
-Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modificar e expandir seu próprio grimório.
+Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modificar e expandir do jeito que preferir.
 
 ## 💜 Créditos
 * **Idealização e Direção de Produto:** [Eduardo00082](https://github.com/Eduardo00082)
-* **Conceito Visual e Design (UI/UX):** Luna (Gemini IA)
-* **Desenvolvimento e Lógica:** Claude Opus (IA)
+  *(Responsável pela visão, funcionalidades e revisão final de design).*
+
+* **Conceito Visual e Design (UI/UX):** Luna (IA - Gemini)
+  *(Criação da identidade mística e experiência do usuário).*
+
+* **Desenvolvimento e Engenharia:**
+  * **Claude Opus:** Refinamento de lógica e polimento das funções principais.
+  * **v0.app:** Estrutura e prototipagem inicial do projeto.
+  * **GitHub Copilot:** Revisão técnica, limpeza de arquitetura e otimização.
 
 ---
 ## Sobre o projeto

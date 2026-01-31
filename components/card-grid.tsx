@@ -26,7 +26,8 @@ export function CardGrid({ onCardClick, onCreateClick }: CardGridProps) {
       searchQuery === "" ||
       card.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
       card.content.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      card.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase()))
+      card.tags.some((tag) => tag.toLowerCase().includes(searchQuery.toLowerCase())) ||
+      card.language?.toLowerCase().includes(searchQuery.toLowerCase())
 
     const matchesTags = selectedTags.length === 0 || selectedTags.some((tag) => card.tags.includes(tag))
 

@@ -72,7 +72,7 @@ export function SearchBar() {
           onChange={(e) => setSearchQuery(e.target.value)}
           onFocus={() => setIsFocused(true)}
           onBlur={() => setIsFocused(false)}
-          placeholder="Pesquisar cartas, tags, código..."
+          placeholder="Pesquisar cartas, tags, código, linguagem..."
           className="flex-1 bg-transparent px-4 py-4 text-white placeholder:text-gray-500 focus:outline-none"
           style={{ caretColor: "#a855f7" }}
         />

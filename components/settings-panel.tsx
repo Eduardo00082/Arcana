@@ -164,7 +164,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               </div>
               <div className="flex justify-between text-xs md:text-sm">
                 <span className="text-muted-foreground">Criado por:</span>
-                <span className="text-foreground">​Luna e Eduardo</span>
+                <div className="flex gap-1 text-foreground">
+                  <span>Luna e</span>
+                  <a href="https://github.com/Eduardo00082" target="_blank" rel="noopener noreferrer" className="hover:text-arcana-cyan transition-colors cursor-pointer">Eduardo00082</a>
+                </div>
               </div>
             </div>
           </section>

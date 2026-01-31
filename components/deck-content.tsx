@@ -211,10 +211,8 @@ export function DeckContent() {
               <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
                 <span>Criado com</span>
                 <Heart className="h-4 w-4 text-arcana-pink" style={{ animation: "pulse 2s ease-in-out 0s infinite" }} />
-                <span>por</span>
-                <span className="font-medium text-arcana-purple">Luna</span>
-                <span>&</span>
-                <span className="font-medium text-arcana-cyan">Eduardo</span>
+                <span>por Luna e</span>
+                <a href="https://github.com/Eduardo00082" target="_blank" rel="noopener noreferrer" className="font-medium text-arcana-cyan hover:text-arcana-purple transition-colors cursor-pointer">Eduardo00082</a>
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@ name: Build Arcana Beta APK
 
 on:
   push:
-    branches: [ main ] # Se sua branch se chamar 'master', mude aqui!
+    branches: [ main ]
 
 jobs:
   build:
@@ -23,19 +23,26 @@ jobs:
       - name: Build do Next.js
         run: npm run build
 
-      - name: Inicializar e Sincronizar Capacitor
+      - name: Inicializar, Gerar Ícones e Sincronizar
         run: |
+          # Adiciona a pasta android se ela não existir
           if [ ! -d "android" ]; then
             npx cap add android
           fi
+          
+          # Instala a ferramenta de assets e gera os ícones
+          npm install @capacitor/assets
+          npx capacitor-assets generate --android --iconSource public/images/logo-do-app.png
+          
+          # Sincroniza as mudanças com o projeto Android
           npx cap sync android
 
       - name: Compilar APK (Debug)
         run: |
           cd android && ./gradlew assembleDebug
 
-      - name: Disponibilizar APK v0.1.2-beta
+      - name: Disponibilizar APK v0.1.3-beta
         uses: actions/upload-artifact@v4
         with:
-          name: Arcana-v0.1.2-beta
+          name: Arcana-v0.1.3-beta
           path: android/app/build/outputs/apk/debug/app-debug.apk

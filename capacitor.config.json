@@ -1,0 +1,6 @@
+{
+  "appId": "com.stylesai.arcana",
+  "appName": "Arcana",
+  "webDir": "out",
+  "bundledWebRuntime": false
+}

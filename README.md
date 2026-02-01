@@ -22,7 +22,7 @@ O design foi construído sobre o conceito de **Glassmorphism** e **Neon**, unind
 - 💾 **Backup Arcano**: Sistema manual de importação e exportação de dados para segurança total.
 
 ---
-## *Acesse [AQUI](https://arcana-ruddy.vercel.app/) a demo do app! (Versão online)*
+## *Acesse [AQUI](https://arcana-ruddy.vercel.app/) a demo do app! (Versão online atualizada em tempo real)*
 ---
 
 ## 🚀 Arcana Boost (Em Breve)

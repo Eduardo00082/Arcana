@@ -30,11 +30,18 @@ jobs:
             npx cap add android
           fi
           
-          # Instala a ferramenta de assets e gera os ícones
+          # Instala a ferramenta de assets
           npm install @capacitor/assets
-          npx capacitor-assets generate --android --iconSource public/images/logo-do-app.png
           
-          # Sincroniza as mudanças com o projeto Android
+          # CRUCIAL: A ferramenta espera a logo em assets/icon.png ou assets/logo.png por padrão
+          # Vamos criar essa pasta e copiar sua logo pra lá rapidinho só pro build
+          mkdir -p assets
+          cp public/images/logo-do-app.png assets/icon.png
+          
+          # Agora o comando simples, sem o parâmetro que deu erro
+          npx capacitor-assets generate --android
+          
+          # Sincroniza tudo
           npx cap sync android
 
       - name: Compilar APK (Debug)

@@ -11,45 +11,39 @@ jobs:
       - name: Checkout do Código
         uses: actions/checkout@v4
 
-      - name: Configurar Java 17
+      - name: Configurar Ambiente Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Instalar Dependências
-        run: npm install
-
-      - name: Build do Next.js
-        run: npm run build
-
-      - name: Inicializar, Gerar Ícones e Sincronizar
+      - name: Instalar Dependências e Build Next.js
         run: |
-          # Adiciona a pasta android se ela não existir
+          npm install
+          npm run build
+
+      - name: Configurar Assets e Capacitor
+        run: |
           if [ ! -d "android" ]; then
             npx cap add android
           fi
           
-          # Instala a ferramenta de assets
           npm install @capacitor/assets
-          
-          # CRUCIAL: A ferramenta espera a logo em assets/icon.png ou assets/logo.png por padrão
-          # Vamos criar essa pasta e copiar sua logo pra lá rapidinho só pro build
           mkdir -p assets
-          cp public/images/logo-do-app.png assets/icon.png
           
-          # Agora o comando simples, sem o parâmetro que deu erro
+          # Preparando arquivos para geração automática
+          cp public/images/icon.png assets/icon.png
+          cp public/images/logo-do-app.png assets/splash.png
+          
           npx capacitor-assets generate --android
-          
-          # Sincroniza tudo
           npx cap sync android
 
       - name: Compilar APK (Debug)
         run: |
           cd android && ./gradlew assembleDebug
 
-      - name: Disponibilizar APK v0.1.3-beta
+      - name: Upload APK v0.1.4-beta
         uses: actions/upload-artifact@v4
         with:
-          name: Arcana-v0.1.3-beta
+          name: Arcana-v0.1.4-beta
           path: android/app/build/outputs/apk/debug/app-debug.apk

@@ -23,6 +23,7 @@ const commonTags = [
   "ASYNC",
   "STATE",
   "PROMPT",
+  "SYSTEM PROMPT",
 ]
 
 const languages = [

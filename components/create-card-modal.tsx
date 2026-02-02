@@ -21,6 +21,7 @@ const commonTags = [
   "ASYNC",
   "STATE",
   "PROMPT",
+  "SYSTEM PROMPT",
 ]
 
 const languages = [
@@ -199,7 +200,7 @@ export function CreateCardModal({ onClose }: CreateCardModalProps) {
                     key={lang.value}
                     type="button"
                     onClick={() => setLanguage(lang.value)}
-                    className={`relative rounded-lg px-3 py-2 text-xs font-medium transition-all ${
+                    className={`relative rounded-xl px-4 py-2 text-xs font-medium transition-all ${
                       language === lang.value
                         ? "bg-white/10 text-white"
                         : "bg-white/5 text-gray-400 hover:bg-white/[0.07] hover:text-gray-300"

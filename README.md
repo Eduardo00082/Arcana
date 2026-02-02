@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./public/images/logo-do-app.jpg" alt="Arcana Logo" width="250" style="border-radius: 20px;">
 
-# Seu Grimório Digital (v0.1.2-Beta)
+# Seu Armazenamento Local!
 </div>
 
 O **Arcana** é um ambiente imersivo e privado projetado para desenvolvedores e Prompt Engineers que buscam organizar seu trabalho (snippets, lógicas e prompts) com segurança absoluta. Diferente de outras ferramentas, o Arcana é **100% Offline-First**, garantindo que seus dados nunca saiam do seu dispositivo.
@@ -58,4 +58,4 @@ Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modifi
 
 ---
 ## Sobre o projeto
-Acredito que todos podem fazer algo. O que importa é o resultado, independente do caminho que escolha.
+Acredito que todos podem fazer algo. O que importa é o resultado, independente do caminho que escolha. Faço projetos por hobby. Eu acredito que todos possuem valor. E seus valores são os seus desejos e sonhos. Eu acredito em mim, e eu acredito em você :)

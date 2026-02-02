@@ -192,7 +192,7 @@ export function CardGrid({ onCardClick, onCreateClick }: CardGridProps) {
 
       {/* Cards Grid with Staggered Animation */}
       <div 
-        className={`grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 transition-opacity duration-300 ${
+        className={`grid grid-cols-2 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 transition-opacity duration-300 ${
           isVisible ? 'opacity-100' : 'opacity-0'
         }`}
       >

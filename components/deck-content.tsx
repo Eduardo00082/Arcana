@@ -227,7 +227,7 @@ export function DeckContent() {
     <div className="relative h-screen overflow-hidden bg-black">
       <Starfield intensity={settings.fogIntensity} />
 
-      <div className="relative z-10 flex h-screen flex-col md:flex-row">
+      <div className="relative z-10 flex h-screen flex-row">
         <Sidebar 
           activeView={activeView} 
           onViewChange={setActiveView} 

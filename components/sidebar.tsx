@@ -25,12 +25,12 @@ export function Sidebar({ activeView, onViewChange, onSettingsClick }: SidebarPr
           <button
             key={id}
             onClick={() => onViewChange(id)}
-            className={`group flex flex-col items-center gap-0.5 rounded-lg p-1.5 transition-all md:gap-1 md:p-2 ${
+            className={`group flex flex-col items-center gap-1 rounded-lg p-2 transition-all ${
               activeView === id ? "text-arcana-purple" : "text-muted-foreground hover:text-arcana-pink"
             }`}
           >
             <div
-              className={`rounded-lg p-1.5 transition-all md:p-2 ${
+              className={`rounded-lg p-2 transition-all ${
                 activeView === id ? "bg-arcana-purple/20" : "group-hover:bg-arcana-purple/10"
               }`}
               style={
@@ -41,21 +41,21 @@ export function Sidebar({ activeView, onViewChange, onSettingsClick }: SidebarPr
                   : undefined
               }
             >
-              <Icon className="h-4 w-4 md:h-5 md:w-5" />
+              <Icon className="h-5 w-5" />
             </div>
-            <span className="text-[9px] font-medium md:text-[10px] lg:text-xs">{label}</span>
+            <span className="text-[10px] font-medium lg:text-xs">{label}</span>
           </button>
         ))}
       </nav>
 
       <button
         onClick={onSettingsClick}
-        className="group flex flex-col items-center gap-0.5 rounded-lg p-1.5 text-muted-foreground transition-all hover:text-arcana-pink md:gap-1 md:p-2"
+        className="group flex flex-col items-center gap-1 rounded-lg p-2 text-muted-foreground transition-all hover:text-arcana-pink"
       >
-        <div className="rounded-lg p-1.5 transition-all group-hover:bg-arcana-purple/10 md:p-2">
-          <Settings className="h-4 w-4 md:h-5 md:w-5" />
+        <div className="rounded-lg p-2 transition-all group-hover:bg-arcana-purple/10">
+          <Settings className="h-5 w-5" />
         </div>
-        <span className="text-[9px] font-medium md:text-[10px] lg:text-xs">Config</span>
+        <span className="text-[10px] font-medium lg:text-xs">Config</span>
       </button>
     </aside>
   )

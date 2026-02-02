@@ -33,7 +33,7 @@ jobs:
           echo "Sincronizando com a versão: $APP_VERSION"
           
       - name: Sincronizar Versão
-         run: |
+        run: |
           npm version ${{ steps.get_version.outputs.version }} --no-git-tag-version
           npx cap sync android
          

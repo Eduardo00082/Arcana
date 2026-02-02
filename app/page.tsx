@@ -191,7 +191,7 @@ export default function WelcomePage() {
             isVisible ? "opacity-100" : "opacity-0"
           }`}
         >
-          Seus dados ficam salvos localmente no seu navegador
+          Seus dados ficam salvos localmente no seu dispositivo
         </p>
       </div>
 

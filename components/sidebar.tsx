@@ -19,8 +19,8 @@ export function Sidebar({ activeView, onViewChange, onSettingsClick }: SidebarPr
   const { settings } = useArcana()
 
   return (
-    <aside className="flex w-full flex-row items-center justify-between gap-2 border-b border-arcana-purple/20 bg-arcana-dark/50 px-4 py-2 backdrop-blur-md md:w-16 md:flex-col md:border-b-0 md:border-r md:py-4 lg:w-20">
-      <nav className="flex flex-1 flex-row items-center gap-2 md:flex-col md:gap-4">
+    <aside className="flex w-16 flex-col items-center justify-between gap-4 border-r border-arcana-purple/20 bg-arcana-dark/50 py-4 backdrop-blur-md lg:w-20">
+      <nav className="flex flex-1 flex-col items-center gap-4">
         {navItems.map(({ id, label, icon: Icon }) => (
           <button
             key={id}

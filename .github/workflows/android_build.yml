@@ -33,7 +33,7 @@ jobs:
           echo "Sincronizando com a versão: $APP_VERSION"
           
           # Altera a versão no AndroidManifest.xml e build.gradle automaticamente
-          npx capacitor-set-version -v $APP_VERSION -b $GITHUB_RUN_NUMBER android
+          npx capacitor-set-version -v $APP_VERSION -b $GITHUB_RUN_NUMBER . --android
           
           # Gerando Ícones e Splash
           npm install @capacitor/assets

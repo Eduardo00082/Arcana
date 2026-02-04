@@ -27,7 +27,7 @@ const STAR_COLORS = [
 export function Starfield() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const starsRef = useRef<Star[]>([])
-  const animationIdRef = useRef<number>()
+  const animationIdRef = useRef<number>(0)
   const lastFrameTimeRef = useRef<number>(0)
   
   const { settings } = useArcana()

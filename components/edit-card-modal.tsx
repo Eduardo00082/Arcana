@@ -17,7 +17,6 @@ const commonTags = [
   "CSS/TAILWIND",
   "DATABASE",
   "API",
-  "TYPESCRIPT",
   "NODE.JS",
   "PYTHON",
   "ASYNC",

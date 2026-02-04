@@ -1,7 +1,7 @@
 <div align="center">
   <img src="./public/images/logo-do-app.jpg" alt="Arcana Logo" width="250" style="border-radius: 20px;">
 
-# Seu Armazenamento Local!
+# Sua Biblioteca de Códigos!
 </div>
 
 O **Arcana** é um ambiente imersivo e privado projetado para desenvolvedores e Prompt Engineers que buscam organizar seu trabalho (snippets, lógicas e prompts) com segurança absoluta. Diferente de outras ferramentas, o Arcana é **100% Offline-First**, garantindo que seus dados nunca saiam do seu dispositivo.

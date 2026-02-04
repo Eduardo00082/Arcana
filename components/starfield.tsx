@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useRef } from "react"
+import { useArcana } from "@/contexts/arcana-context"
 
 interface Star {
   x: number
@@ -14,20 +15,22 @@ interface Star {
   type: "small" | "medium" | "large" | "bright"
 }
 
-// Cores do tema Arcana
 const STAR_COLORS = [
-  { r: 168, g: 85, b: 247 },   // Roxo
-  { r: 147, g: 197, b: 253 },  // Azul claro
-  { r: 34, g: 211, b: 238 },   // Cyan
-  { r: 236, g: 72, b: 153 },   // Rosa
-  { r: 255, g: 255, b: 255 },  // Branco
-  { r: 199, g: 210, b: 254 },  // Lavanda
+  { r: 168, g: 85, b: 247 },
+  { r: 147, g: 197, b: 253 },
+  { r: 34, g: 211, b: 238 },
+  { r: 236, g: 72, b: 153 },
+  { r: 255, g: 255, b: 255 },
+  { r: 199, g: 210, b: 254 },
 ]
 
 export function Starfield() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const starsRef = useRef<Star[]>([])
   const animationIdRef = useRef<number>()
+  const lastFrameTimeRef = useRef<number>(0)
+  
+  const { settings } = useArcana()
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -36,7 +39,16 @@ export function Starfield() {
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    // Configurar canvas
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+      navigator.userAgent
+    ) || window.innerWidth < 768
+
+    // FPS baseado nas configurações
+    const targetFPS = settings.performanceMode 
+      ? 30 
+      : settings.customFPS
+    const frameDelay = 1000 / targetFPS
+
     const resizeCanvas = () => {
       const dpr = window.devicePixelRatio || 1
       canvas.width = window.innerWidth * dpr
@@ -47,11 +59,23 @@ export function Starfield() {
       generateStars()
     }
 
-    // Gerar estrelas
     const generateStars = () => {
       const stars: Star[] = []
-      const area = window.innerWidth * window.innerHeight
-      const starCount = Math.floor(area / 2500) // ~300-500 estrelas dependendo da tela
+      
+      let starCount: number
+      if (settings.autoStars) {
+        const area = window.innerWidth * window.innerHeight
+        const baseCount = Math.floor(area / 2500)
+        starCount = settings.performanceMode ? Math.floor(baseCount * 0.6) : baseCount
+      } else {
+        starCount = settings.starCount
+      }
+
+      // Se 0 estrelas, não gera nada
+      if (starCount === 0) {
+        starsRef.current = []
+        return
+      }
 
       for (let i = 0; i < starCount; i++) {
         const random = Math.random()
@@ -61,38 +85,42 @@ export function Starfield() {
         let pulseSpeed: number
         let glowMultiplier: number
 
-        // Distribuição de tipos de estrelas
-        if (random < 0.5) {
-          // 50% - Estrelas pequenas (sutis)
+        const performanceAdjustment = settings.performanceMode ? 0.1 : 0
+
+        if (random < 0.5 + performanceAdjustment) {
           type = "small"
           size = Math.random() * 1 + 0.5
           baseOpacity = Math.random() * 0.4 + 0.2
           pulseSpeed = Math.random() * 0.003 + 0.001
-          glowMultiplier = 2
-        } else if (random < 0.8) {
-          // 30% - Estrelas médias
+          glowMultiplier = settings.performanceMode ? 1.5 : 2
+        } else if (random < 0.8 + performanceAdjustment * 0.5) {
           type = "medium"
           size = Math.random() * 1.5 + 1
           baseOpacity = Math.random() * 0.5 + 0.3
           pulseSpeed = Math.random() * 0.004 + 0.002
-          glowMultiplier = 3
+          glowMultiplier = settings.performanceMode ? 2 : 3
         } else if (random < 0.95) {
-          // 15% - Estrelas grandes
           type = "large"
           size = Math.random() * 2 + 1.5
           baseOpacity = Math.random() * 0.6 + 0.4
           pulseSpeed = Math.random() * 0.005 + 0.002
-          glowMultiplier = 4
+          glowMultiplier = settings.performanceMode ? 2.5 : 4
         } else {
-          // 5% - Estrelas muito brilhantes (destaque)
-          type = "bright"
-          size = Math.random() * 2.5 + 2
-          baseOpacity = Math.random() * 0.3 + 0.7
-          pulseSpeed = Math.random() * 0.006 + 0.003
-          glowMultiplier = 6
+          if (settings.performanceMode) {
+            type = "medium"
+            size = Math.random() * 1.5 + 1
+            baseOpacity = Math.random() * 0.5 + 0.3
+            pulseSpeed = Math.random() * 0.004 + 0.002
+            glowMultiplier = 2
+          } else {
+            type = "bright"
+            size = Math.random() * 2.5 + 2
+            baseOpacity = Math.random() * 0.3 + 0.7
+            pulseSpeed = Math.random() * 0.006 + 0.003
+            glowMultiplier = 6
+          }
         }
 
-        // Cor aleatória do tema
         const color = STAR_COLORS[Math.floor(Math.random() * STAR_COLORS.length)]
 
         stars.push({
@@ -114,55 +142,112 @@ export function Starfield() {
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    // Loop de animação
     const animate = (time: number) => {
+      // Controle de FPS
+      if (time - lastFrameTimeRef.current < frameDelay) {
+        animationIdRef.current = requestAnimationFrame(animate)
+        return
+      }
+      lastFrameTimeRef.current = time
+
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
+      // Se não tem estrelas, só limpa e retorna
+      if (starsRef.current.length === 0) {
+        animationIdRef.current = requestAnimationFrame(animate)
+        return
+      }
+
       starsRef.current.forEach((star) => {
-        // Calcular pulsação suave
-        const pulse = Math.sin(time * star.pulseSpeed + star.pulseOffset)
+        // Se animações estão desligadas, usa valores fixos
+        const pulse = settings.enableAnimations 
+          ? Math.sin(time * star.pulseSpeed + star.pulseOffset)
+          : 0
+        
         const pulseIntensity = star.type === "bright" ? 0.5 : 0.3
         const currentOpacity = star.baseOpacity * (0.7 + pulse * pulseIntensity)
-        const currentSize = star.size * (1 + pulse * 0.15)
+        const currentSize = star.size * (1 + (settings.enableAnimations ? pulse * 0.15 : 0))
         const glowSize = currentSize * star.glowMultiplier
 
-        // Desenhar glow externo (mais suave)
-        const gradient = ctx.createRadialGradient(
-          star.x, star.y, 0,
-          star.x, star.y, glowSize
-        )
-
         const { r, g, b } = star.color
-        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.6})`)
-        gradient.addColorStop(0.3, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.3})`)
-        gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.1})`)
-        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
 
-        ctx.beginPath()
-        ctx.arc(star.x, star.y, glowSize, 0, Math.PI * 2)
-        ctx.fillStyle = gradient
-        ctx.fill()
-
-        // Desenhar núcleo da estrela (mais brilhante)
-        const coreGradient = ctx.createRadialGradient(
-          star.x, star.y, 0,
-          star.x, star.y, currentSize
-        )
-        coreGradient.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity})`)
-        coreGradient.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.8})`)
-        coreGradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
-
-        ctx.beginPath()
-        ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
-        ctx.fillStyle = coreGradient
-        ctx.fill()
-
-        // Desenhar ponto central super brilhante para estrelas "bright"
-        if (star.type === "bright" || star.type === "large") {
+        // Renderização baseada na qualidade de glow
+        if (settings.glowQuality === "none") {
+          // Sem glow - apenas pontos sólidos
           ctx.beginPath()
-          ctx.arc(star.x, star.y, currentSize * 0.3, 0, Math.PI * 2)
-          ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity * 1.2})`
+          ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentOpacity})`
           ctx.fill()
+          
+        } else if (settings.glowQuality === "low") {
+          // Glow mínimo (1 gradiente simples)
+          const gradient = ctx.createRadialGradient(
+            star.x, star.y, 0,
+            star.x, star.y, glowSize * 0.5
+          )
+          gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentOpacity})`)
+          gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+
+          ctx.beginPath()
+          ctx.arc(star.x, star.y, glowSize * 0.5, 0, Math.PI * 2)
+          ctx.fillStyle = gradient
+          ctx.fill()
+          
+        } else if (settings.glowQuality === "medium") {
+          // Glow simplificado (2 cores)
+          const gradient = ctx.createRadialGradient(
+            star.x, star.y, 0,
+            star.x, star.y, glowSize
+          )
+          gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.5})`)
+          gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+
+          ctx.beginPath()
+          ctx.arc(star.x, star.y, glowSize, 0, Math.PI * 2)
+          ctx.fillStyle = gradient
+          ctx.fill()
+
+          // Núcleo
+          ctx.beginPath()
+          ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
+          ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentOpacity})`
+          ctx.fill()
+          
+        } else {
+          // High quality - qualidade completa (4 cores)
+          const gradient = ctx.createRadialGradient(
+            star.x, star.y, 0,
+            star.x, star.y, glowSize
+          )
+          gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.6})`)
+          gradient.addColorStop(0.3, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.3})`)
+          gradient.addColorStop(0.6, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.1})`)
+          gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+
+          ctx.beginPath()
+          ctx.arc(star.x, star.y, glowSize, 0, Math.PI * 2)
+          ctx.fillStyle = gradient
+          ctx.fill()
+
+          const coreGradient = ctx.createRadialGradient(
+            star.x, star.y, 0,
+            star.x, star.y, currentSize
+          )
+          coreGradient.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity})`)
+          coreGradient.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${currentOpacity * 0.8})`)
+          coreGradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, 0)`)
+
+          ctx.beginPath()
+          ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
+          ctx.fillStyle = coreGradient
+          ctx.fill()
+
+          if (star.type === "bright" || star.type === "large") {
+            ctx.beginPath()
+            ctx.arc(star.x, star.y, currentSize * 0.3, 0, Math.PI * 2)
+            ctx.fillStyle = `rgba(255, 255, 255, ${currentOpacity * 1.2})`
+            ctx.fill()
+          }
         }
       })
 
@@ -171,14 +256,20 @@ export function Starfield() {
 
     animationIdRef.current = requestAnimationFrame(animate)
 
-    // Cleanup
     return () => {
       window.removeEventListener("resize", resizeCanvas)
       if (animationIdRef.current) {
         cancelAnimationFrame(animationIdRef.current)
       }
     }
-  }, [])
+  }, [
+    settings.starCount, 
+    settings.autoStars, 
+    settings.performanceMode,
+    settings.customFPS,
+    settings.glowQuality,
+    settings.enableAnimations
+  ])
 
   return (
     <canvas

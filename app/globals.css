@@ -151,30 +151,27 @@
    ============================================ */
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  
   html {
+    /* Base padrão para Desktop */
+    font-size: 16px; 
     scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
-  
-  body {
-    @apply bg-arcana-bg text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
   }
 
-  /* Selection */
-  ::selection {
-    background-color: rgba(147, 51, 234, 0.3);
-    color: #ffffff;
+  /* 📱 Para celulares (telas menores que 768px) */
+  @media (max-width: 768px) {
+    html {
+      /* Isso reduz TUDO que usa 'rem' (paddings, margins, fonts, heights) */
+      /* 16px * 0.85 = 13.6px */
+      font-size: 12px; 
+    }
   }
 
-  ::-moz-selection {
-    background-color: rgba(147, 51, 234, 0.3);
-    color: #ffffff;
+  /* 🖥️ Para telas MUITO grandes (opcional, estilo TV ou UltraWide) */
+  @media (min-width: 1536px) {
+    html {
+      font-size: 18px; 
+    }
   }
 }
 

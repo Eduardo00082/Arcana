@@ -13,7 +13,6 @@ export function ArcanaCard({ card, onClick }: ArcanaCardProps) {
   const previewLines = card.content.split("\n").slice(0, 6).join("\n")
   const neonIntensity = settings.neonIntensity / 100
 
-  // Cores por linguagem para o indicador
   const languageColors: Record<string, string> = {
     typescript: "#3178c6",
     javascript: "#f7df1e",
@@ -30,6 +29,14 @@ export function ArcanaCard({ card, onClick }: ArcanaCardProps) {
   }
 
   const langColor = languageColors[card.language] || languageColors.other
+
+  /* 
+    ═══════════════════════════════════════════════════════════════════════════
+    📐 ALTURA DO CARD
+    Mobile: h-48 (192px) | Desktop: md:h-56 (224px)
+    Opções: h-40, h-44, h-48, h-52, h-56, h-60, h-64
+    ═══════════════════════════════════════════════════════════════════════════
+  */
 
   return (
     <button
@@ -80,31 +87,52 @@ export function ArcanaCard({ card, onClick }: ArcanaCardProps) {
               className="h-1.5 w-1.5 rounded-full"
               style={{ backgroundColor: langColor }}
             />
+            {/* 
+              ═══════════════════════════════════════════════════════════
+              🏷️ FONTE: BADGE DA LINGUAGEM (ex: "TYPESCRIPT")
+              Mobile: text-[11px] | Desktop: md:text-xs (12px)
+              Opções: text-[9px], text-[10px], text-[11px], text-xs, text-sm
+              ═══════════════════════════════════════════════════════════
+            */}
             <span 
-              className="text-[10px] font-semibold uppercase tracking-wider md:text-xs"
+              className="text-[7px] font-semibold uppercase tracking-wider md:text-xs"
               style={{ color: langColor }}
             >
               {card.language}
             </span>
           </div>
 
-          {/* Primary Tag */}
-          {card.tags[0] && (
-            <span 
-              className="rounded-full px-2.5 py-1 text-[9px] font-medium uppercase tracking-wide transition-all duration-300 group-hover:scale-105 md:text-[10px]"
-              style={{
-                background: "rgba(236, 72, 153, 0.15)",
-                border: "1px solid rgba(236, 72, 153, 0.3)",
-                color: "#f472b6"
-              }}
-            >
-              {card.tags[0]}
-            </span>
+{/* 
+  ═══════════════════════════════════════════════════════════
+  🏷️ FONTE: TAG PRINCIPAL (ex: "REACT")
+  Mobile: text-[10px] | Desktop: md:text-[11px]
+  Max largura Mobile: max-w-[80px] | Desktop: md:max-w-[100px]
+  Opções max-w: max-w-[60px], max-w-[80px], max-w-[100px], max-w-[120px]
+  ═══════════════════════════════════════════════════════════
+*/}
+{card.tags[0] && (
+  <span 
+    className="max-w-[65px] truncate rounded-full px-2 py-1 text-[7px] font-medium uppercase tracking-wide transition-all duration-300 group-hover:scale-105 md:max-w-[100px] md:text-[11px]"
+    style={{
+      background: "rgba(236, 72, 153, 0.15)",
+      border: "1px solid rgba(236, 72, 153, 0.3)",
+      color: "#f472b6"
+    }}
+    title={card.tags[0]}
+  >
+    {card.tags[0]}
+  </span>
           )}
         </div>
 
-        {/* Title */}
-        <h3 className="mb-3 line-clamp-2 text-sm font-bold leading-tight text-white transition-colors group-hover:text-arcana-pink md:text-base">
+        {/* 
+          ═══════════════════════════════════════════════════════════
+          📝 FONTE: TÍTULO DO CARD
+          Mobile: text-base (16px) | Desktop: md:text-lg (18px)
+          Opções: text-sm (14px), text-base (16px), text-lg (18px), text-xl (20px)
+          ═══════════════════════════════════════════════════════════
+        */}
+        <h3 className="mb-3 line-clamp-2 text-base font-bold leading-tight text-white transition-colors group-hover:text-arcana-pink md:text-lg">
           {card.title}
         </h3>
 
@@ -126,8 +154,15 @@ export function ArcanaCard({ card, onClick }: ArcanaCardProps) {
 
           {/* Code Content */}
           <pre className="h-full overflow-hidden py-2 pl-8 pr-3">
+            {/* 
+              ═══════════════════════════════════════════════════════════
+              💻 FONTE: PREVIEW DO CÓDIGO
+              Mobile: text-[11px] | Desktop: md:text-xs (12px)
+              Opções: text-[9px], text-[10px], text-[11px], text-xs, text-sm
+              ═══════════════════════════════════════════════════════════
+            */}
             <code 
-              className="block font-mono text-[10px] leading-relaxed text-gray-400 transition-colors group-hover:text-gray-300 md:text-[11px]"
+              className="block font-mono text-[11px] leading-relaxed text-gray-400 transition-colors group-hover:text-gray-300 md:text-xs"
               style={{ tabSize: 2 }}
             >
               {previewLines}
@@ -146,7 +181,14 @@ export function ArcanaCard({ card, onClick }: ArcanaCardProps) {
         {/* Footer - Tags count indicator */}
         {card.tags.length > 1 && (
           <div className="mt-2 flex items-center justify-end">
-            <span className="text-[9px] text-gray-500 transition-colors group-hover:text-gray-400 md:text-[10px]">
+            {/* 
+              ═══════════════════════════════════════════════════════════
+              🔢 FONTE: CONTADOR DE TAGS (ex: "+2 tags")
+              Mobile: text-[10px] | Desktop: md:text-[11px]
+              Opções: text-[8px], text-[9px], text-[10px], text-[11px], text-xs
+              ═══════════════════════════════════════════════════════════
+            */}
+            <span className="text-[10px] text-gray-500 transition-colors group-hover:text-gray-400 md:text-[11px]">
               +{card.tags.length - 1} tag{card.tags.length > 2 ? 's' : ''}
             </span>
           </div>

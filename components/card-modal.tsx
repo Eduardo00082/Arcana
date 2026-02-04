@@ -130,7 +130,7 @@ export function CardModal({ card, onClose }: CardModalProps) {
                 }}
               >
                 {copied ? <Check className="h-4 w-4 md:h-5 md:w-5" /> : <Copy className="h-4 w-4 md:h-5 md:w-5" />}
-                <span>{copied ? "Copiado!" : "Copy Code"}</span>
+                <span>{copied ? "Copiado!" : "Copiar"}</span>
               </button>
             </div>
           </div>

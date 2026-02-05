@@ -1,5 +1,5 @@
 # Language
-[Leia em Português 🇧🇷](./README_BR.md) | [Read in English here)
+[Leia em Português 🇧🇷](./README_BR.md)
 
 <div align="center">
   <img src="./public/images/logo-do-app.jpg" alt="Arcana Logo" width="250" style="border-radius: 20px;">

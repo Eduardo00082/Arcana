@@ -57,5 +57,13 @@ Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modifi
   * **GitHub Copilot:** Revisão técnica, limpeza de arquitetura e otimização.
 
 ---
-## Sobre o projeto
-Acredito que todos podem fazer algo. O que importa é o resultado, independente do caminho que escolha. Faço projetos por hobby. Eu acredito que todos possuem valor. E seus valores são os seus desejos e sonhos. Eu acredito em mim, e eu acredito em você :)
+## 📖 Sobre o Projeto
+O Arcana nasceu da vontade de criar um app próprio, e que possa ser útil para as pessoas.
+
+Desenvolvido inteiramente através de um setup híbrido, usando um **Chromebook** para codificação + **GitHub Codespace** e um **celular** para testes reaais, esse projeto é o resultado de uma colaboração intensa entre humano e a inteligência artificial.
+
+Acredito que o papel do desenvolvedor está evoluindo para algo que nunca achei que pudesse: Eu, uma pessoa comum e entusiasita de tecnologia, que antes não acreditava que poderia, ao menos uma fração, ser igual aos desenvolvedores que se dedicam a criar seus apps. Pra mim, isso é arte. E eu valorizo isso. Não estou falando que usar IA me faça ser parte dessa comunidade de artistas. Talvez nunca vou. Mas isso não indica de que eu também não tenho a criatividade humana só por usar IA. Eu também quero a sensação de criar algo.
+
+Nesse projeto solo, trato as IAs mais do que uma ferramenta, somos parceiros de colaboração. No Arcana, meu trabalho foi usar diferentes LLMs (Large Language Models) para construir uma ferramenta que eu mesmo precisava, e que talvez seja útil para você também. Mesmo não sabendo codar uma linha de código, tive que fazer pequenos ajustes de forma manual (tendo até mesmo que pedir comentários mais detalhados. Por favor, me perdoem pelo tanto de comentários que só engordam os códigos, lol).
+
+* **Faço por hobby:** Eu ainda estou no Ensino Médio, sem nenhuma experiência em programação. Mas vou me dedicar ao máximo nesse projeto (e talvez em projetos futuros), fazendo tudo o que está ao meu alcance atual. Tudo o que eu quero é criar algo útil. :)

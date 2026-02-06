@@ -15,7 +15,7 @@
 *.jks
 
 # idx
-.idx/
+/.idx/
 
 # debug
 npm-debug.log*

@@ -14,6 +14,9 @@
 *.key
 *.jks
 
+# idx
+.idx/
+
 # debug
 npm-debug.log*
 yarn-debug.log*

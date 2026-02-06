@@ -1,10 +1,10 @@
 {
   "name": "arcana-app",
-  "version": "0.1.5-beta",
+  "version": "0.2.0-beta",
   "private": true,
   "scripts": {
     "build": "next build",
-    "dev": "next dev",
+    "dev": "next dev --turbo",
     "sync:version": "node ./scripts/sync-version.js",
     "lint": "eslint .",
     "start": "next start",

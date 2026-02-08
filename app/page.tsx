@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 import { Starfield } from "@/components/starfield"
-import { Sparkles, Code2, Lock, Zap, ArrowRight } from "lucide-react"
+import { Code2, Lock, Zap, ArrowRight } from "lucide-react"
 
 export default function WelcomePage() {
   const router = useRouter()
@@ -11,15 +11,12 @@ export default function WelcomePage() {
   const [isExiting, setIsExiting] = useState(false)
 
   useEffect(() => {
-    // Trigger animations after mount
     const timer = setTimeout(() => setIsVisible(true), 100)
     return () => clearTimeout(timer)
   }, [])
 
-  // Função para navegar com animação de saída
   const handleNavigate = () => {
     setIsExiting(true)
-    // Espera a animação terminar antes de navegar
     setTimeout(() => {
       router.push("/deck")
     }, 800)
@@ -27,8 +24,6 @@ export default function WelcomePage() {
 
   /* ════════════════════════════════════════════════════════════════
      🎯 FEATURES: LISTA DE RECURSOS EXIBIDOS
-     Ícones disponíveis: Code2, Lock, Zap, Sparkles, etc (lucide-react)
-     Para adicionar mais, apenas adicione objetos ao array
   ════════════════════════════════════════════════════════════════ */
   const features = [
     { icon: Code2, text: "Snippets organizados" },
@@ -38,47 +33,33 @@ export default function WelcomePage() {
 
   return (
     <main className="relative min-h-screen overflow-hidden bg-black">
-      {/* Starfield Background */}
       <Starfield />
 
       {/* ════════════════════════════════════════════════════════════════
           ✨ TRANSIÇÃO: FLASH DE SAÍDA
-          Cores: from-purple-600 via-pink-500 to-cyan-500
-          Duração: duration-500 (500ms)
       ════════════════════════════════════════════════════════════════ */}
       <div 
         className={`pointer-events-none fixed inset-0 z-50 bg-gradient-to-br from-purple-600 via-pink-500 to-cyan-500 transition-opacity duration-500 ${
           isExiting ? "opacity-100" : "opacity-0"
         }`}
-        style={{
-          mixBlendMode: "screen",
-        }}
+        style={{ mixBlendMode: "screen" }}
       />
 
       {/* ════════════════════════════════════════════════════════════════
           ✨ TRANSIÇÃO: CORTINA DE SAÍDA
-          Duração: 0.8s (800ms)
-          Efeito: Círculo expandindo do centro
       ════════════════════════════════════════════════════════════════ */}
       <div 
         className={`pointer-events-none fixed inset-0 z-40 bg-black transition-all duration-700 ease-in-out ${
           isExiting ? "opacity-100" : "opacity-0"
         }`}
         style={{
-          clipPath: isExiting 
-            ? "circle(150% at 50% 50%)" 
-            : "circle(0% at 50% 50%)",
+          clipPath: isExiting ? "circle(150% at 50% 50%)" : "circle(0% at 50% 50%)",
           transition: "clip-path 0.8s ease-in-out, opacity 0.3s ease-out",
         }}
       />
 
       {/* ════════════════════════════════════════════════════════════════
           🔮 ORBS: ESFERAS DE GRADIENTE NO FUNDO
-          Tamanho: h-96 w-96 (384px)
-          Blur: blur-[120px]
-          Cores: bg-purple-600/20, bg-cyan-600/20
-          Opções tamanho: h-64 w-64, h-80 w-80, h-96 w-96, h-[500px] w-[500px]
-          Opções blur: blur-[80px], blur-[100px], blur-[120px], blur-[150px]
       ════════════════════════════════════════════════════════════════ */}
       <div 
         className={`absolute left-1/4 top-1/4 h-96 w-96 rounded-full bg-purple-600/20 blur-[120px] transition-all duration-700 ${
@@ -92,50 +73,69 @@ export default function WelcomePage() {
         style={{ animationDelay: "1s" }} 
       />
 
-      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center px-2 py-12">
-        {/* ════════════════════════════════════════════════════════════════
-    🖼️ LOGO: IMAGEM DO APP
-    Container Mobile: h-24 w-24 (96px) | Desktop: md:h-32 md:w-32 (128px)
-    Caminho: /images/logo-do-app.jpg (mude para o seu arquivo)
-    Borda: rounded-3xl (24px)
-    Opções container: h-20 w-20, h-24 w-24, h-28 w-28, h-32 w-32, h-40 w-40
-    Opções borda: rounded-xl, rounded-2xl, rounded-3xl, rounded-full
-════════════════════════════════════════════════════════════════ */}
-<div 
-  className={`mb-8 transition-all duration-700 ${
-    isExiting 
-      ? "scale-150 opacity-0 blur-lg" 
-      : isVisible 
-        ? "opacity-100 translate-y-0" 
-        : "opacity-0 -translate-y-10"
-  }`}
->
-  <div className="relative h-24 w-24 md:h-32 md:w-32">
-    {/* Glow animado atrás da logo */}
-    <div className="absolute inset-0 animate-pulse rounded-3xl bg-gradient-to-br from-purple-600 to-pink-600 opacity-50 blur-2xl" />
-    
-    {/* Imagem da logo */}
-    <img 
-      src="/images/icon.png"
-      alt="Arcana Logo"
-      className="relative h-full w-full rounded-3xl object-cover border-2 border-purple-500/50 shadow-lg"
-      style={{
-        boxShadow: "0 0 30px rgba(147, 51, 234, 0.4)"
-      }}
-    />
-  </div>
-</div>
+      {/* ════════════════════════════════════════════════════════════════
+          📐 CONTAINER CENTRAL: LAYOUT COM VH PROPORCIONAL
+          
+          ── VALORES VH (Mobile) ──
+          Escalam automaticamente com a altura da tela!
+          
+          ── VALORES FIXOS (Desktop md+) ──
+          Usa valores em rem/px para controle preciso
+          
+          ── TABELA DE CONVERSÃO ──
+          Básico (740px)  │ Intermediário (900px) │ Premium (1000px)
+          7vh = 52px      │ 7vh = 63px            │ 7vh = 70px
+      ════════════════════════════════════════════════════════════════ */}
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-between px-4 py-[7vh] md:h-auto md:justify-center md:gap-12 md:py-12 lg:gap-16 lg:py-16">
+        
+        {/* ═══════════════════════════════════════════════════════════════
+            📦 BLOCO 1: LOGO
+            
+            ── TAMANHO VH ──
+            h-[12vh] = 12% da altura da tela
+            Básico: 89px │ Intermediário: 108px │ Premium: 120px
+            
+            ── ASPECTO ──
+            Mantém proporção quadrada com aspect-square
+        ═══════════════════════════════════════════════════════════════ */}
+        <div 
+          className={`transition-all duration-700 ${
+            isExiting 
+              ? "scale-150 opacity-0 blur-lg" 
+              : isVisible 
+                ? "opacity-100 translate-y-0" 
+                : "opacity-0 -translate-y-10"
+          }`}
+        >
+          <div className="relative h-[16vh] w-[16vh] min-h-[80px] min-w-[80px] md:h-28 md:w-28 lg:h-32 lg:w-32">
+            <div className="absolute inset-0 animate-pulse rounded-2xl bg-gradient-to-br from-purple-600 to-pink-600 opacity-50 blur-2xl md:rounded-3xl" />
+            <img 
+              src="/images/icon.png"
+              alt="Arcana Logo"
+              className="relative h-full w-full rounded-2xl border-2 border-purple-500/50 object-cover shadow-lg md:rounded-3xl"
+              style={{ boxShadow: "0 0 30px rgba(147, 51, 234, 0.4)" }}
+            />
+          </div>
+        </div>
 
-        {/* Main Content */}
-        <div className="flex flex-col items-center text-center">
+        {/* ═══════════════════════════════════════════════════════════════
+            📦 BLOCO 2: CONTEÚDO CENTRAL
+            
+            ── GAP VH ──
+            gap-[2.5vh] = espaçamento proporcional à tela
+            Básico: 19px │ Intermediário: 23px │ Premium: 25px
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="flex flex-col items-center gap-[2.5vh] text-center md:gap-5 lg:gap-6">
+          
           {/* ════════════════════════════════════════════════════════════════
-              📝 TEXTO: "Bem-vindo ao"
-              Mobile: text-3xl (30px) | Desktop: md:text-4xl lg:text-5xl
-              Opções: text-2xl, text-3xl, text-4xl, text-5xl
-              Cores do gradiente: #d946ef, #a855f7, #6366f1, #3b82f6, #22d3ee
+              📝 "Bem-vindo ao" - BASE (1x)
+              
+              ── TAMANHO VH ──
+              text-[3.5vh] = 3.5% da altura
+              Básico: 26px │ Intermediário: 32px │ Premium: 35px
           ════════════════════════════════════════════════════════════════ */}
           <h2
-            className={`text-3xl font-medium tracking-wide transition-all duration-700 md:text-4xl lg:text-5xl ${
+            className={`text-[3.5vh] font-medium tracking-wide transition-all duration-700 md:text-3xl lg:text-4xl xl:text-5xl ${
               isExiting 
                 ? "-translate-y-10 opacity-0 blur-sm" 
                 : isVisible 
@@ -143,6 +143,7 @@ export default function WelcomePage() {
                   : "opacity-0 translate-y-10"
             }`}
             style={{
+              marginTop: 'clamp(-30px, -4vh, -15px)',
               background: "linear-gradient(90deg, #d946ef 0%, #a855f7 30%, #6366f1 50%, #3b82f6 70%, #22d3ee 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
@@ -154,83 +155,89 @@ export default function WelcomePage() {
           </h2>
 
           {/* ════════════════════════════════════════════════════════════════
-              📝 TÍTULO: "ARCANA" (Logo Principal)
-              Mobile: text-7xl (72px) | Desktop: md:text-8xl lg:text-9xl (96px/128px)
-              Opções: text-6xl, text-7xl, text-8xl, text-9xl
-              Cores do gradiente: #d946ef → #22d3ee
-              Glow: drop-shadow com purple e cyan
+              📝 "ARCANA" - TÍTULO (3.5x)
+              
+              ── TAMANHO VH ──
+              text-[10vh] = 10% da altura (IMPACTANTE!)
+              Básico: 74px │ Intermediário: 90px │ Premium: 100px
           ════════════════════════════════════════════════════════════════ */}
-          <h1
-            className={`mt-4 text-7xl font-black tracking-wider transition-all duration-700 md:text-8xl lg:text-9xl ${
-              isExiting 
-                ? "scale-110 opacity-0 blur-md" 
-                : isVisible 
-                  ? "opacity-100 scale-100" 
-                  : "opacity-0 scale-90"
-            }`}
-            style={{
-              background:
-                "linear-gradient(90deg, #d946ef 0%, #a855f7 20%, #6366f1 40%, #3b82f6 60%, #22d3ee 80%, #06b6d4 100%)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
-              filter: isExiting 
-                ? "drop-shadow(0 0 60px rgba(147, 51, 234, 0.8)) drop-shadow(0 0 120px rgba(34, 211, 238, 0.5))"
-                : "drop-shadow(0 0 40px rgba(147, 51, 234, 0.6)) drop-shadow(0 0 80px rgba(34, 211, 238, 0.3))",
-              transitionDelay: isExiting ? "50ms" : "200ms",
-            }}
-          >
-            ARCANA
-          </h1>
+<h1
+  className={`arcana-title font-black tracking-wider transition-all duration-700 md:text-8xl lg:text-9xl ${
+    isExiting 
+      ? "scale-110 opacity-0 blur-md" 
+      : isVisible 
+        ? "opacity-100 scale-100" 
+        : "opacity-0 scale-90"
+  }`}
+  style={{
+    background: "linear-gradient(90deg, #d946ef 0%, #a855f7 20%, #6366f1 40%, #3b82f6 60%, #22d3ee 80%, #06b6d4 100%)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    backgroundClip: "text",
+    filter: isExiting 
+      ? "drop-shadow(0 0 60px rgba(147, 51, 234, 0.8)) drop-shadow(0 0 120px rgba(34, 211, 238, 0.5))"
+      : "drop-shadow(0 0 40px rgba(147, 51, 234, 0.6)) drop-shadow(0 0 80px rgba(34, 211, 238, 0.3))",
+    transitionDelay: isExiting ? "50ms" : "200ms",
+  }}
+>
+  ARCANA
+</h1>
 
           {/* ════════════════════════════════════════════════════════════════
-              📝 TAGLINE: "Sua Biblioteca Local"
-              Mobile: text-xl (20px) | Desktop: md:text-2xl lg:text-3xl
-              Opções: text-lg, text-xl, text-2xl, text-3xl
-              Cor: Gradiente purple (#8b5cf6 → #a855f7)
+              📝 TAGLINE (0.8x)
+              
+              ── TAMANHO VH ──
+              text-[2.2vh] = sutil mas legível
+              Básico: 16px │ Intermediário: 20px │ Premium: 22px
           ════════════════════════════════════════════════════════════════ */}
           <p
-            className={`mt-4 text-xl font-medium italic tracking-wide transition-all duration-700 md:text-2xl lg:text-3xl ${
-              isExiting 
-                ? "translate-y-10 opacity-0 blur-sm" 
-                : isVisible 
-                  ? "opacity-100 translate-y-0" 
-                  : "opacity-0 translate-y-10"
-            }`}
-            style={{
-              background: "linear-gradient(90deg, #8b5cf6, #a855f7)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              textShadow: "0 0 30px rgba(139, 92, 246, 0.8)",
-              transitionDelay: isExiting ? "100ms" : "300ms",
-            }}
-          >
-            Sua Biblioteca Local
-          </p>
+  className={`-mt-[4vh] text-[2.2vh] font-medium italic tracking-wide transition-all duration-700 md:mt-0 md:text-xl lg:text-2xl xl:text-3xl ${
+    isExiting 
+      ? "translate-y-10 opacity-0 blur-sm" 
+      : isVisible 
+        ? "opacity-100 translate-y-0" 
+        : "opacity-0 translate-y-10"
+  }`}
+  style={{
+    marginTop: 'clamp(-30px, -4vh, -20px)',
+    background: "linear-gradient(90deg, #8b5cf6, #a855f7)",
+    WebkitBackgroundClip: "text",
+    WebkitTextFillColor: "transparent",
+    textShadow: "0 0 30px rgba(139, 92, 246, 0.8)",
+    transitionDelay: isExiting ? "100ms" : "300ms",
+  }}
+>
+  Sua Biblioteca Local
+</p>
 
           {/* ════════════════════════════════════════════════════════════════
-              🏷️ FEATURES: BADGES DE RECURSOS
-              Gap Mobile: gap-4 (16px) | Desktop: md:gap-6 (24px)
-              Padding Mobile: px-4 py-2 | Desktop: md:px-6 md:py-3
-              Ícone Mobile: h-4 w-4 | Desktop: md:h-5 md:w-5
-              Texto Mobile: text-sm | Desktop: md:text-base
+              🏷️ FEATURES - BADGES (0.6x)
+              
+              ── MARGIN VH ──
+              mt-[6vh] = espaço generoso proporcional
+              Básico: 44px │ Intermediário: 54px │ Premium: 60px
+              
+              ── GAP VH ──
+              gap-[1.5vh] = espaçamento entre badges
+              Básico: 11px │ Intermediário: 14px │ Premium: 15px
           ════════════════════════════════════════════════════════════════ */}
-          <div 
-            className={`mt-12 flex flex-wrap justify-center gap-4 transition-all duration-700 md:gap-6 ${
-              isExiting 
-                ? "translate-y-10 opacity-0 blur-sm" 
-                : isVisible 
-                  ? "opacity-100 translate-y-0" 
-                  : "opacity-0 translate-y-10"
-            }`}
-            style={{
-              transitionDelay: isExiting ? "150ms" : "500ms",
-            }}
-          >
+<div 
+  className={`flex flex-wrap justify-center transition-all duration-700 md:mt-8 md:gap-4 lg:mt-10 lg:gap-5 ${
+    isExiting 
+      ? "translate-y-10 opacity-0 blur-sm" 
+      : isVisible 
+        ? "opacity-100 translate-y-0" 
+        : "opacity-0 translate-y-10"
+  }`}
+  style={{
+    marginTop: 'clamp(35px, 6vh, 70px)',
+    gap: 'clamp(10px, 3vh, 30px)'
+  }}
+>
             {features.map((feature, index) => (
               <div
                 key={index}
-                className={`flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-950/30 px-4 py-2 backdrop-blur-sm transition-all hover:border-purple-400/50 hover:bg-purple-900/40 md:px-6 md:py-3 ${
+                className={`flex items-center gap-[0.8vh] rounded-full border border-purple-500/30 bg-purple-950/30 px-[2vh] py-[1vh] backdrop-blur-sm transition-all hover:border-purple-400/50 hover:bg-purple-900/40 md:gap-2 md:px-5 md:py-2.5 lg:px-6 lg:py-3 ${
                   isExiting ? "scale-90" : ""
                 }`}
                 style={{
@@ -238,171 +245,141 @@ export default function WelcomePage() {
                   transitionDelay: isExiting ? `${150 + index * 50}ms` : `${600 + index * 100}ms`,
                 }}
               >
-                <feature.icon className="h-4 w-4 text-purple-400 md:h-5 md:w-5" />
-                <span className="text-sm font-medium text-purple-200 md:text-base">
-                  {feature.text}
-                </span>
+                <feature.icon className="h-[1.8vh] w-[1.8vh] min-h-[14px] min-w-[14px] text-purple-400 md:h-5 md:w-5 lg:h-6 lg:w-6" />
+                <span 
+  className="font-medium text-purple-200 md:text-base lg:text-lg"
+  style={{ fontSize: 'clamp(12px, 1.5vh, 18px)' }}
+>
+  {feature.text}
+</span>
               </div>
             ))}
           </div>
         </div>
 
-        {/* ════════════════════════════════════════════════════════════════
-            🔘 BOTÃO CTA: "Começar agora"
-            Padding Mobile: px-12 py-5 | Desktop: md:px-16 md:py-6
-            Texto Mobile: text-xl (20px) | Desktop: md:text-2xl (24px)
-            Margem top Mobile: mt-16 | Desktop: md:mt-20
-            Borda arredondada: rounded-2xl (16px)
-            Opções padding: px-8 py-4, px-10 py-5, px-12 py-5, px-16 py-6
-            Opções texto: text-lg, text-xl, text-2xl
-        ════════════════════════════════════════════════════════════════ */}
-        <button
-          onClick={handleNavigate}
-          disabled={isExiting}
-          className={`group relative mt-16 overflow-hidden rounded-2xl px-12 py-5 text-xl font-semibold text-white transition-all duration-500 hover:scale-105 hover:shadow-2xl active:scale-95 disabled:pointer-events-none md:mt-20 md:px-16 md:py-6 md:text-2xl ${
-            isExiting 
-              ? "scale-125 opacity-0 blur-lg" 
-              : isVisible 
-                ? "opacity-100 translate-y-0" 
-                : "opacity-0 translate-y-10"
-          }`}
-          style={{
-            border: "2px solid rgba(168, 85, 247, 0.5)",
-            background: "linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.2))",
-            boxShadow: isExiting
-              ? `
-                0 0 80px rgba(168, 85, 247, 0.8),
-                0 0 160px rgba(168, 85, 247, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1)
-              `
-              : `
-                0 0 40px rgba(168, 85, 247, 0.4),
-                0 0 80px rgba(168, 85, 247, 0.2),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1)
-              `,
-            transitionDelay: isExiting ? "0ms" : "700ms",
-          }}
-        >
-          {/* Animated Background */}
-          <div
-            className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background: "linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.3))",
-            }}
-          />
-
+        {/* ═══════════════════════════════════════════════════════════════
+            📦 BLOCO 3: BOTÃO + HINT
+            
+            ── GAP VH ──
+            gap-[2vh] = espaço entre botão e hint
+            Básico: 15px │ Intermediário: 18px │ Premium: 20px
+        ═══════════════════════════════════════════════════════════════ */}
+        <div className="flex flex-col items-center gap-[2vh] md:gap-5 lg:gap-6">
+          
           {/* ════════════════════════════════════════════════════════════════
-              🔘 BOTÃO: CONTEÚDO INTERNO
-              Ícone seta: h-6 w-6 (24px)
-              Opções ícone: h-5 w-5, h-6 w-6, h-7 w-7
+              🔘 BOTÃO CTA (0.9x)
+              
+              ── PADDING VH ──
+              px-[3vh] py-[1.8vh] = botão proporcional
+              text-[2.2vh] = texto legível em todas as telas
           ════════════════════════════════════════════════════════════════ */}
-          <span className="relative z-10 flex items-center gap-3 tracking-wide">
-            {isExiting ? "Entrando..." : "Começar agora"}
-            <ArrowRight className={`h-6 w-6 transition-transform ${isExiting ? "translate-x-2" : "group-hover:translate-x-1"}`} />
-          </span>
-
-          {/* Shine Effect */}
-          <div
-            className="absolute inset-0 translate-x-[-100%] opacity-50 transition-transform duration-1000 group-hover:translate-x-[100%]"
+          <button
+            onClick={handleNavigate}
+            disabled={isExiting}
+            className={`group relative overflow-hidden rounded-2xl px-[3vh] py-[1.8vh] text-[2.2vh] font-semibold text-white transition-all duration-500 hover:scale-105 hover:shadow-2xl active:scale-95 disabled:pointer-events-none md:rounded-3xl md:px-10 md:py-4 md:text-xl lg:px-12 lg:py-5 lg:text-2xl ${
+              isExiting 
+                ? "scale-125 opacity-0 blur-lg" 
+                : isVisible 
+                  ? "opacity-100 translate-y-0" 
+                  : "opacity-0 translate-y-10"
+            }`}
             style={{
-              background: "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)",
-            }}
-          />
-
-          {/* Pulse Ring */}
-          <div 
-            className={`absolute inset-0 rounded-2xl opacity-75 ${isExiting ? "hidden" : ""}`}
-            style={{
+              border: "2px solid rgba(168, 85, 247, 0.5)",
               background: "linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.2))",
-              animation: "ping 2s cubic-bezier(0, 0, 0.2, 1) infinite",
+              boxShadow: isExiting
+                ? "0 0 80px rgba(168, 85, 247, 0.8), 0 0 160px rgba(168, 85, 247, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.1)"
+                : "0 0 40px rgba(168, 85, 247, 0.4), 0 0 80px rgba(168, 85, 247, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.1)",
+              transitionDelay: isExiting ? "0ms" : "700ms",
             }}
-          />
-        </button>
-
-        {/* ════════════════════════════════════════════════════════════════
-            ✨ PARTÍCULAS FLUTUANTES
-            Quantidade: 6 partículas (mude o Array(6))
-            Tamanho: h-2 w-2 (8px)
-            Cores: #a855f7 (purple), #ec4899 (pink), #22d3ee (cyan)
-            Animação: float (4-6.5s)
-            Opções tamanho: h-1 w-1, h-2 w-2, h-3 w-3
-            Opções quantidade: Array(4), Array(6), Array(8), Array(10)
-        ════════════════════════════════════════════════════════════════ */}
-        <div className={`pointer-events-none absolute inset-0 overflow-hidden transition-opacity duration-500 ${isExiting ? "opacity-0" : ""}`}>
-          {[...Array(6)].map((_, i) => (
+          >
             <div
-              key={i}
-              className="absolute h-2 w-2 rounded-full"
+              className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+              style={{ background: "linear-gradient(135deg, rgba(168, 85, 247, 0.4), rgba(236, 72, 153, 0.3))" }}
+            />
+            <span className="relative z-10 flex items-center gap-[1vh] tracking-wide md:gap-3">
+              {isExiting ? "Entrando..." : "Começar agora"}
+              <ArrowRight className={`h-[2.5vh] w-[2.5vh] min-h-[18px] min-w-[18px] transition-transform md:h-7 md:w-7 lg:h-8 lg:w-8 ${isExiting ? "translate-x-2" : "group-hover:translate-x-1"}`} />
+            </span>
+            <div
+              className="absolute inset-0 translate-x-[-100%] opacity-50 transition-transform duration-1000 group-hover:translate-x-[100%]"
+              style={{ background: "linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent)" }}
+            />
+            <div 
+              className={`absolute inset-0 rounded-2xl opacity-75 md:rounded-3xl ${isExiting ? "hidden" : ""}`}
               style={{
-                left: `${10 + i * 15}%`,
-                top: `${20 + (i % 3) * 30}%`,
-                background: i % 3 === 0 ? "#a855f7" : i % 3 === 1 ? "#ec4899" : "#22d3ee",
-                opacity: 0.3,
-                animation: `float ${4 + i * 0.5}s ease-in-out infinite`,
-                animationDelay: `${i * 0.3}s`,
-                boxShadow: `0 0 20px ${i % 3 === 0 ? "#a855f7" : i % 3 === 1 ? "#ec4899" : "#22d3ee"}`,
+                background: "linear-gradient(135deg, rgba(147, 51, 234, 0.3), rgba(236, 72, 153, 0.2))",
+                animation: "ping 2s cubic-bezier(0, 0, 0.2, 1) infinite",
               }}
             />
-          ))}
-        </div>
+          </button>
 
-        {/* ════════════════════════════════════════════════════════════════
-            📝 HINT: TEXTO INFERIOR
-            Mobile: text-sm (14px) | Desktop: md:text-base (16px)
-            Cor: text-gray-500
-            Margem top: mt-12 (48px)
-        ════════════════════════════════════════════════════════════════ */}
-        <p
-          className={`mt-12 text-sm text-gray-500 transition-all duration-700 md:text-base ${
-            isExiting 
-              ? "translate-y-5 opacity-0" 
-              : isVisible 
-                ? "opacity-100" 
-                : "opacity-0"
-          }`}
-          style={{
-            transitionDelay: isExiting ? "200ms" : "1000ms",
-          }}
-        >
-          Seus dados ficam salvos localmente no seu dispositivo
-        </p>
+          {/* ════════════════════════════════════════════════════════════════
+              📝 HINT (0.5x)
+              
+              ── TAMANHO VH ──
+              text-[1.3vh] = discreto mas legível
+              Básico: 10px │ Intermediário: 12px │ Premium: 13px
+          ════════════════════════════════════════════════════════════════ */}
+<p
+  className={`text-gray-500 transition-all duration-700 md:text-sm lg:text-base ${
+    isExiting 
+      ? "translate-y-5 opacity-0" 
+      : isVisible 
+        ? "opacity-100" 
+        : "opacity-0"
+  }`}
+  style={{ 
+    transitionDelay: isExiting ? "200ms" : "1000ms",
+    fontSize: 'clamp(10px, 1.3vh, 14px)'
+  }}
+>
+            Seus dados ficam salvos localmente no seu dispositivo
+          </p>
+        </div>
       </div>
 
       {/* ════════════════════════════════════════════════════════════════
           🎬 ANIMAÇÕES GLOBAIS
-          
-          float: Animação de flutuação das partículas
-          - Duração base: 4s (mude no style das partículas)
-          - Movimento Y: -30px máximo
-          - Movimento X: -10px a +10px
-          
-          ping: Animação do pulse ring do botão
-          - Duração: 2s
-          - Scale: 1.1 (110%)
       ════════════════════════════════════════════════════════════════ */}
-      <style jsx global>{`
-        @keyframes float {
-          0%, 100% {
-            transform: translateY(0) translateX(0);
-          }
-          25% {
-            transform: translateY(-20px) translateX(10px);
-          }
-          50% {
-            transform: translateY(-10px) translateX(-10px);
-          }
-          75% {
-            transform: translateY(-30px) translateX(5px);
-          }
-        }
+<style jsx global>{`
+  .arcana-title {
+    font-size: clamp(60px, 9vh, 100px);
+    margin-top: clamp(-30px, -4vh, -15px);
+  }
+  
+  @media (min-width: 768px) {
+    .arcana-title {
+      font-size: 6rem;      /* md: ~96px */
+      margin-top: 0;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .arcana-title {
+      font-size: 8rem;      /* lg: ~128px */
+    }
+  }
+  
+  @media (min-width: 1280px) {
+    .arcana-title {
+      font-size: 9rem;     /* xl: ~160px */
+    }
+  }
 
-        @keyframes ping {
-          75%, 100% {
-            transform: scale(1.1);
-            opacity: 0;
-          }
-        }
-      `}</style>
+  @keyframes float {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    25% { transform: translateY(-20px) translateX(10px); }
+    50% { transform: translateY(-10px) translateX(-10px); }
+    75% { transform: translateY(-30px) translateX(5px); }
+  }
+
+  @keyframes ping {
+    75%, 100% {
+      transform: scale(1.1);
+      opacity: 0;
+    }
+  }
+`}</style>
     </main>
   )
 }

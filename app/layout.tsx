@@ -8,13 +8,13 @@ const _geist = Geist({ subsets: ["latin"] })
 const _geistMono = Geist_Mono({ subsets: ["latin"] })
 
 export const metadata: Metadata = {
-  title: "ARCANA - Seu espaço pessoal de código",
+  title: "ARCANA - Sua Biblioteca Local.",
   description: "Gerencie seus snippets e fragmentos de código de forma local e privada",
   icons: {
     icon: [
       {
-        url: "/images/logo-do-app.jpg",
-        type: "image/jpeg",
+        url: "/images/icon.png",
+        type: "image/png",
       },
     ],
     apple: "/images/logo-do-app.jpg",

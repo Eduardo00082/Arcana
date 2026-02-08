@@ -1,4 +1,4 @@
-name: Build Arcana Beta APK
+name: Build Arcana Release APK
 
 on:
   push:
@@ -17,41 +17,52 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Instalar Dependências e Build Next.js
-        run: |
-          npm install
-          npm run build
+      - name: Instalar Dependências
+        run: npm install
 
-      - name: Sincronizar Versão e Configurar Assets
+      - name: Extrair Versão do package.json
+        id: get_version
+        run: |
+          VERSION=$(node -p "require('./package.json').version")
+          echo "versao=$VERSION" >> $GITHUB_OUTPUT
+          echo "Sincronizando com a versão: $VERSION"
+
+      - name: Build Next.js
+        run: npm run build
+
+      - name: Sincronizar com Capacitor e Atualizar Versão Android
         run: |
           if [ ! -d "android" ]; then
             npx cap add android
           fi
-          
-          # Pega a versão do package.json e coloca numa variável
-          APP_VERSION=$(node -p "require('./package.json').version")
-          echo "Sincronizando com a versão: $APP_VERSION"
-          
-      - name: Sincronizar Versão
-        run: |
-          npm version ${{ steps.get_version.outputs.version }} --no-git-tag-version
+          # O comando abaixo sincroniza os arquivos e tenta atualizar os metadados
           npx cap sync android
-         
-          # Gerando Ícones e Splash
+
+      - name: Gerar Ícones e Splash
+        run: |
           npm install @capacitor/assets
           mkdir -p assets
-          cp public/images/icon.png assets/icon.png
-          cp public/images/logo-do-app.png assets/splash.png
+          cp public/images/icon.png assets/icon.png || true
+          cp public/images/logo-do-app.png assets/splash.png || true
           npx capacitor-assets generate --android
-          
           npx cap sync android
 
-      - name: Compilar APK (Debug)
+      - name: Compilar APK (Release)
         run: |
-          cd android && ./gradlew assembleDebug
+          cd android && ./gradlew assembleRelease
 
-      - name: Upload APK Final
+      - name: Assinar APK com a sua Chave
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: android/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Upload APK Assinado
         uses: actions/upload-artifact@v4
         with:
-          name: StylesAi-Beta-Build
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: Arcana-v${{ steps.get_version.outputs.versao }}
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}

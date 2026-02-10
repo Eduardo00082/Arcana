@@ -178,16 +178,16 @@ export function DeckContent() {
                     >
                       <feature.icon className="h-5 w-5" style={{ color: feature.color }} />
                     </div>
-  {/* ════════════════════════════════════════════════════════
-    📝 BOOST: LABEL DOS FEATURES
-    Tamanho: text-sm (14px)
-    Opções: text-xs, text-sm, text-base
-════════════════════════════════════════════════════════ */}
-<span 
-  className={`text-sm ${feature.isSpecial ? "font-medium text-orange-400" : "text-gray-300"}`}
->
-  {feature.label}
-</span>
+                  {/* ════════════════════════════════════════════════════════
+                      📝 BOOST: LABEL DOS FEATURES
+                      Tamanho: text-sm (14px)
+                      Opções: text-xs, text-sm, text-base
+                  ════════════════════════════════════════════════════════ */}
+                  <span 
+                    className={`text-sm ${feature.isSpecial ? "font-medium text-orange-400" : "text-gray-300"}`}
+                  >
+                    {feature.label}
+                  </span>
                     {/* ════════════════════════════════════════════════════════
                         🏷️ BOOST: BADGE "EM BREVE"
                         Tamanho: text-[10px]

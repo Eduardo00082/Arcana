@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useArcana } from "@/contexts/arcana-context"
 
 interface Star {
@@ -29,21 +29,39 @@ export function Starfield() {
   const starsRef = useRef<Star[]>([])
   const animationIdRef = useRef<number>(0)
   const lastFrameTimeRef = useRef<number>(0)
+  const [isMobile, setIsMobile] = useState(false)
   
   const { settings } = useArcana()
 
+  /* ════════════════════════════════════════════════════════════════
+     📱 DETECÇÃO MOBILE
+  ════════════════════════════════════════════════════════════════ */
   useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(
+        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+          navigator.userAgent
+        ) || window.innerWidth < 768
+      )
+    }
+    checkMobile()
+    window.addEventListener("resize", checkMobile)
+    return () => window.removeEventListener("resize", checkMobile)
+  }, [])
+
+  /* ════════════════════════════════════════════════════════════════
+     🖥️ CANVAS - SÓ RODA NO DESKTOP
+  ════════════════════════════════════════════════════════════════ */
+  useEffect(() => {
+    // ✅ Se for mobile, não roda o canvas
+    if (isMobile) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
     const ctx = canvas.getContext("2d")
     if (!ctx) return
 
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-      navigator.userAgent
-    ) || window.innerWidth < 768
-
-    // FPS baseado nas configurações
     const targetFPS = settings.performanceMode 
       ? 30 
       : settings.customFPS
@@ -71,7 +89,6 @@ export function Starfield() {
         starCount = settings.starCount
       }
 
-      // Se 0 estrelas, não gera nada
       if (starCount === 0) {
         starsRef.current = []
         return
@@ -143,7 +160,6 @@ export function Starfield() {
     window.addEventListener("resize", resizeCanvas)
 
     const animate = (time: number) => {
-      // Controle de FPS
       if (time - lastFrameTimeRef.current < frameDelay) {
         animationIdRef.current = requestAnimationFrame(animate)
         return
@@ -152,14 +168,12 @@ export function Starfield() {
 
       ctx.clearRect(0, 0, window.innerWidth, window.innerHeight)
 
-      // Se não tem estrelas, só limpa e retorna
       if (starsRef.current.length === 0) {
         animationIdRef.current = requestAnimationFrame(animate)
         return
       }
 
       starsRef.current.forEach((star) => {
-        // Se animações estão desligadas, usa valores fixos
         const pulse = settings.enableAnimations 
           ? Math.sin(time * star.pulseSpeed + star.pulseOffset)
           : 0
@@ -171,16 +185,13 @@ export function Starfield() {
 
         const { r, g, b } = star.color
 
-        // Renderização baseada na qualidade de glow
         if (settings.glowQuality === "none") {
-          // Sem glow - apenas pontos sólidos
           ctx.beginPath()
           ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentOpacity})`
           ctx.fill()
           
         } else if (settings.glowQuality === "low") {
-          // Glow mínimo (1 gradiente simples)
           const gradient = ctx.createRadialGradient(
             star.x, star.y, 0,
             star.x, star.y, glowSize * 0.5
@@ -194,7 +205,6 @@ export function Starfield() {
           ctx.fill()
           
         } else if (settings.glowQuality === "medium") {
-          // Glow simplificado (2 cores)
           const gradient = ctx.createRadialGradient(
             star.x, star.y, 0,
             star.x, star.y, glowSize
@@ -207,14 +217,12 @@ export function Starfield() {
           ctx.fillStyle = gradient
           ctx.fill()
 
-          // Núcleo
           ctx.beginPath()
           ctx.arc(star.x, star.y, currentSize, 0, Math.PI * 2)
           ctx.fillStyle = `rgba(${r}, ${g}, ${b}, ${currentOpacity})`
           ctx.fill()
           
         } else {
-          // High quality - qualidade completa (4 cores)
           const gradient = ctx.createRadialGradient(
             star.x, star.y, 0,
             star.x, star.y, glowSize
@@ -263,6 +271,7 @@ export function Starfield() {
       }
     }
   }, [
+    isMobile,
     settings.starCount, 
     settings.autoStars, 
     settings.performanceMode,
@@ -270,6 +279,28 @@ export function Starfield() {
     settings.glowQuality,
     settings.enableAnimations
   ])
+
+  /* ════════════════════════════════════════════════════════════════
+     📱 MOBILE: VÍDEO PRÉ-RENDERIZADO
+     🖥️ DESKTOP: CANVAS INTERATIVO
+  ════════════════════════════════════════════════════════════════ */
+  if (isMobile) {
+    return (
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        className="pointer-events-none fixed inset-0 z-0 h-full w-full object-cover"
+        style={{
+          // Escurece levemente para combinar com o tema
+          filter: 'brightness(0.8)',
+        }}
+      >
+        <source src="/videos/star-fundo.mp4" type="video/mp4" />
+      </video>
+    )
+  }
 
   return (
     <canvas

@@ -226,7 +226,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
               <div className="space-y-3 md:space-y-4">
                 {/* Modo Escuro */}
                 <div className="group flex items-center justify-between rounded-lg bg-arcana-dark/60 p-2.5 transition-all duration-200 hover:bg-arcana-dark/80 md:p-3">
-                  <span className="text-xs text-foreground md:text-sm">Modo escuro (Em breve)</span>
+                  <span className="text-xs text-foreground md:text-sm">
+                  Modo escuro <span className="text-arcana-cyan opacity-70">(Em breve)</span>
+                  </span>
                   <button
                     onClick={() => updateSettings({ darkMode: !settings.darkMode })}
                     className={`relative h-6 w-11 rounded-full transition-all duration-300 ${
@@ -395,7 +397,10 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
                       <div className="mb-2 flex items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Gauge className="h-3.5 w-3.5 text-arcana-cyan" />
-                          <span className="text-xs text-foreground">FPS (Quadros por Segundo)</span>
+                          <span className="text-xs text-foreground">
+                           FPS (Quadros por Segundo) <span className="text-arcana-cyan opacity-70">Em breve</span>
+                          </span>
+                          
                         </div>
                         <span className="text-xs font-medium text-arcana-cyan">
                           {settings.performanceMode ? "30 (Fixo)" : `${settings.customFPS} FPS`}
@@ -487,7 +492,9 @@ export function SettingsPanel({ onClose }: SettingsPanelProps) {
 
                 {/* Mudar Tema */}
                 <div className="group flex items-center justify-between rounded-lg bg-arcana-dark/60 p-2.5 transition-all duration-200 hover:bg-arcana-dark/80 md:p-3">
-                  <span className="text-xs text-foreground md:text-sm">Mudar Tema (Em breve)</span>
+                <span className="text-xs text-foreground md:text-sm">
+                 Tema personalizada <span className="text-arcana-cyan opacity-70">Em breve</span>
+                </span>
                   <button className="rounded-lg border border-arcana-purple/40 bg-arcana-purple/20 px-3 py-1.5 text-xs font-medium text-arcana-pink transition-all duration-200 hover:scale-105 hover:bg-arcana-purple/30 hover:shadow-lg hover:shadow-arcana-purple/20 md:px-4">
                     Importar Tema
                   </button>

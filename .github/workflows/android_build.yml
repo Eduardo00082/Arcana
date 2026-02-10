@@ -3,6 +3,7 @@ name: Build Arcana Release APK
 on:
   push:
     branches: [ main ]
+    workflow_dispatch:
 
 jobs:
   build:
@@ -51,7 +52,7 @@ jobs:
         run: |
           cd android && ./gradlew assembleRelease
 
-      - name: Assinar APK com a sua Chave
+      - name: Assinar APK com a Chave
         uses: r0adkll/sign-android-release@v1
         id: sign_app
         with:

@@ -25,7 +25,8 @@ The design was built on the concept of **Glassmorphism** and **Neon**, joining m
 - 💾 **Arcane Backup**: Manual data import and export system for total security.
 
 ---
-## *Access the app demo [HERE](https://arcana-ruddy.vercel.app/)! (Online version updated in real-time)*
+*Access the app demo [ON WEB](https://arcana-ruddy.vercel.app/)! (Online version updated in real time)*
+OR download the Android app [APK](https://github.com/Eduardo00082/Arcana/releases)
 ---
 
 ## 🚀 Arcana Boost (Coming Soon)

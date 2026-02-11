@@ -34,7 +34,6 @@ jobs:
           if [ ! -d "android" ]; then
             npx cap add android
           fi
-          # O comando abaixo sincroniza os arquivos e tenta atualizar os metadados
           npx cap sync android
 
       - name: Gerar Ícones e Splash
@@ -50,19 +49,40 @@ jobs:
         run: |
           cd android && ./gradlew assembleRelease
 
-      - name: Assinar APK com a Chave
-        uses: r0adkll/sign-android-release@v1
+      - name: Otimizar e Assinar APK
         id: sign_app
-        with:
-          releaseDirectory: android/app/build/outputs/apk/release
-          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
-          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          buildToolsVersion: "34.0.0"
+        run: |
+          # 1. Localizar as ferramentas de build mais recentes do Android no Runner
+          BUILD_TOOLS_PATH=$(ls -d ${ANDROID_SDK_ROOT}/build-tools/* | tail -1)
+          echo "Utilizando ferramentas de build em: $BUILD_TOOLS_PATH"
+          
+          # 2. Caminhos dos arquivos
+          UNSIGNED_APK="android/app/build/outputs/apk/release/app-release-unsigned.apk"
+          ALIGNED_APK="android/app/build/outputs/apk/release/Arcana-aligned.apk"
+          SIGNED_APK="android/app/build/outputs/apk/release/Arcana-signed-v${{ steps.get_version.outputs.versao }}.apk"
+          
+          # 3. Decodificar a Keystore do segredo Base64
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 --decode > release.keystore
+          
+          # 4. Zipalign: Otimiza o APK antes da assinatura
+          $BUILD_TOOLS_PATH/zipalign -v 4 "$UNSIGNED_APK" "$ALIGNED_APK"
+          
+          # 5. Apksigner: Assina o APK de forma oficial
+          $BUILD_TOOLS_PATH/apksigner sign --ks release.keystore \
+            --ks-key-alias "${{ secrets.ANDROID_KEY_ALIAS }}" \
+            --ks-pass pass:"${{ secrets.ANDROID_KEYSTORE_PASSWORD }}" \
+            --key-pass pass:"${{ secrets.ANDROID_KEY_PASSWORD }}" \
+            --out "$SIGNED_APK" \
+            "$ALIGNED_APK"
+          
+          # 6. Exportar o caminho para o próximo step
+          echo "signed_file=$SIGNED_APK" >> $GITHUB_OUTPUT
+          
+          # 7. Limpeza de segurança
+          rm release.keystore
 
       - name: Upload APK Assinado
         uses: actions/upload-artifact@v4
         with:
           name: Arcana-v${{ steps.get_version.outputs.versao }}
-          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
+          path: ${{ steps.sign_app.outputs.signed_file }}

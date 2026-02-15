@@ -1,7 +1,9 @@
+// components/starfield.tsx
 "use client"
 
 import { useEffect, useRef, useState } from "react"
 import { useArcana } from "@/contexts/arcana-context"
+import { useDeviceOptimization } from "@/hooks/use-device-optimization"
 
 interface Star {
   x: number
@@ -29,31 +31,42 @@ export function Starfield() {
   const starsRef = useRef<Star[]>([])
   const animationIdRef = useRef<number>(0)
   const lastFrameTimeRef = useRef<number>(0)
-  const [isMobile, setIsMobile] = useState(false)
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false)
   
   const { settings } = useArcana()
+  const { isMobile } = useDeviceOptimization()
 
   /* ════════════════════════════════════════════════════════════════
-     📱 DETECÇÃO MOBILE
+     📦 CACHE: Pré-carrega o vídeo no Cache API
+     - Primeira vez: baixa e salva no cache
+     - Próximas vezes: carrega do cache (instantâneo)
   ════════════════════════════════════════════════════════════════ */
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(
-        /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-          navigator.userAgent
-        ) || window.innerWidth < 768
-      )
+    if (!isMobile) return
+
+    const cacheVideo = async () => {
+      try {
+        const cache = await caches.open("arcana-background-v1")
+        const cached = await cache.match("/videos/star-fundo.mp4")
+        
+        if (!cached) {
+          await cache.add("/videos/star-fundo.mp4")
+          console.log("🎬 Vídeo de fundo cacheado com sucesso!")
+        } else {
+          console.log("🎬 Vídeo de fundo carregado do cache!")
+        }
+      } catch (error) {
+        console.log("📱 Cache API não disponível, usando carregamento normal")
+      }
     }
-    checkMobile()
-    window.addEventListener("resize", checkMobile)
-    return () => window.removeEventListener("resize", checkMobile)
-  }, [])
+
+    cacheVideo()
+  }, [isMobile])
 
   /* ════════════════════════════════════════════════════════════════
-     🖥️ CANVAS - SÓ RODA NO DESKTOP
+     🖥️ CANVAS - SÓ RODA NO DESKTOP (100% idêntico ao original)
   ════════════════════════════════════════════════════════════════ */
   useEffect(() => {
-    // ✅ Se for mobile, não roda o canvas
     if (isMobile) return
 
     const canvas = canvasRef.current
@@ -281,27 +294,48 @@ export function Starfield() {
   ])
 
   /* ════════════════════════════════════════════════════════════════
-     📱 MOBILE: VÍDEO PRÉ-RENDERIZADO
-     🖥️ DESKTOP: CANVAS INTERATIVO
+     📱 MOBILE: VÍDEO PRÉ-RENDERIZADO + POSTER + CACHE
+     🖥️ DESKTOP: CANVAS INTERATIVO (100% idêntico ao original)
   ════════════════════════════════════════════════════════════════ */
   if (isMobile) {
     return (
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="pointer-events-none fixed inset-0 z-0 h-full w-full object-cover"
-        style={{
-          // Escurece levemente para combinar com o tema
-          filter: 'brightness(0.8)',
-        }}
-      >
-        <source src="/videos/star-fundo.mp4" type="video/mp4" />
-      </video>
+      <>
+        {/* 🖼️ POSTER: Imagem estática enquanto o vídeo carrega */}
+        <div
+          className={`pointer-events-none fixed inset-0 z-0 transition-opacity duration-500 ${
+            isVideoLoaded ? "opacity-0" : "opacity-100"
+          }`}
+          style={{
+            backgroundImage: "url('/images/star-fundo-poster.webp')",
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+            filter: "brightness(0.8)",
+          }}
+        />
+
+        {/* 🎬 VÍDEO: Fade-in quando pronto */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          preload="auto"
+          poster="/images/star-fundo-poster.webp"
+          onCanPlayThrough={() => setIsVideoLoaded(true)}
+          className={`pointer-events-none fixed inset-0 z-0 h-full w-full object-cover transition-opacity duration-500 ${
+            isVideoLoaded ? "opacity-100" : "opacity-0"
+          }`}
+          style={{
+            filter: "brightness(0.8)",
+          }}
+        >
+          <source src="/videos/star-fundo.mp4" type="video/mp4" />
+        </video>
+      </>
     )
   }
 
+  // 🖥️ DESKTOP: Canvas idêntico ao original
   return (
     <canvas
       ref={canvasRef}

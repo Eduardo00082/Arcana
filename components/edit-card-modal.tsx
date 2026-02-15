@@ -130,7 +130,7 @@ export function EditCardModal({ card, onClose, onSave }: EditCardModalProps) {
         />
 
         {/* Header */}
-        <div className="relative flex flex-shrink-0 items-center gap-4 border-b border-white/5 p-6">
+        <div className="relative flex shrink-0 items-center gap-4 border-b border-white/5 p-6">
           {/* Icon with glow */}
           <div 
             className="flex h-12 w-12 items-center justify-center rounded-2xl"
@@ -396,7 +396,7 @@ export function EditCardModal({ card, onClose, onSave }: EditCardModalProps) {
             <button
               type="submit"
               disabled={isSaving || !title.trim() || !content.trim() || !hasChanges}
-              className="group relative flex flex-[2] items-center justify-center gap-3 overflow-hidden rounded-2xl py-4 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
+              className="group relative flex flex-2 items-center justify-center gap-3 overflow-hidden rounded-2xl py-4 text-base font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:opacity-50 disabled:hover:scale-100"
               style={{
                 background: hasChanges 
                   ? "linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(236, 72, 153, 0.3))"

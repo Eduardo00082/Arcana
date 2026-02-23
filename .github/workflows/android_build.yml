@@ -41,6 +41,7 @@ jobs:
           fi
           npx cap sync android
 
+          # ATUALIZA A VERSÃO NO ANDROID
           VERSION="${{ steps.get_version.outputs.versao }}"
           sed -i "s/versionName \".*\"/versionName \"$VERSION\"/" android/app/build.gradle
           sed -i "s/versionCode [0-9]*/versionCode ${{ github.run_number }}/" android/app/build.gradle
@@ -52,32 +53,7 @@ jobs:
           cp public/images/icon.png assets/icon.png || true
           cp public/images/logo-do-app.png assets/splash.png || true
           npx capacitor-assets generate --android
-          # ▼▼▼ ÚLTIMO sync — depois disso ninguém mais sobrescreve ▼▼▼
           npx cap sync android
-
-      # ▼▼▼ AGORA sim, depois do último sync ▼▼▼
-      - name: Corrigir Sobreposição (Edge-to-Edge) no Android
-        run: |
-          MAIN_ACTIVITY="android/app/src/main/java/com/stylesai/arcana/MainActivity.java"
-
-          # Reescreve o arquivo inteiro de forma controlada (heredoc)
-          cat > "$MAIN_ACTIVITY" << 'JAVA'
-          package com.stylesai.arcana;
-
-          import android.os.Bundle;
-          import com.getcapacitor.BridgeActivity;
-
-          public class MainActivity extends BridgeActivity {
-              @Override
-              public void onCreate(Bundle savedInstanceState) {
-                  super.onCreate(savedInstanceState);
-                  this.bridge.getWebView().setFitsSystemWindows(true);
-              }
-          }
-          JAVA
-
-          echo "--- MainActivity.java final ---"
-          cat "$MAIN_ACTIVITY"
 
       - name: Compilar APK (Release)
         run: |

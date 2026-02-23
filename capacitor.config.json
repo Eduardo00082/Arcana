@@ -1,5 +1,11 @@
 {
   "appId": "com.stylesai.arcana",
   "appName": "Arcana",
-  "webDir": "out"
+  "webDir": "out",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "adjustMarginsForEdgeToEdge": "auto"
+  }
 }

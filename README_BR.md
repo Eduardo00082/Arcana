@@ -45,7 +45,7 @@ Estamos trabalhando na integração com **DML - Dense Models Language (Modelos d
 Este projeto está sob a **Licença MIT**. Sinta-se à vontade para usar, modificar e expandir do jeito que preferir.
 
 ## 💜 Créditos
-* **Idealização, Direção de Produto e Revisão da infraestrutura interna:** [Eduardo00082](https://github.com/Eduardo00082)
+* **Idealização, Direção de Produto e Revisão da infraestrutura interna:** [Valthre](https://github.com/Valthre)
   *(Responsável pela visão do projeto, funcionalidades, revisão final de design, produto e gerenciamento da infraestrutura do projeto).*
 
 * **Conceito Visual e Design (UI/UX):** Luna (IA - Gemini)

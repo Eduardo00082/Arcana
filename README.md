@@ -49,7 +49,7 @@ We are working on the integration with **DML - Dense Models Language** for:
 This project is under the **MIT License**. Feel free to use, modify, and expand it however you prefer.
 
 ## 💜 Credits
-* **Concept, Product Direction and Internal Infrastructure Review:** [Eduardo00082](https://github.com/Eduardo00082)
+* **Concept, Product Direction and Internal Infrastructure Review:** [Valthre](https://github.com/Valthre)
  *(Responsible for the project vision, functionalities, final design review, product and project infrastructure management).*
 
 * **Visual Concept and Design (UI/UX):** Luna (AI - Gemini)

@@ -276,7 +276,7 @@ export function DeckContent() {
               `}</style>
               
               <p className="mb-2 text-lg font-semibold text-arcana-cyan md:text-xl">
-                Sua Biblioteca de Códigos
+                Sua Biblioteca Local
               </p>
               
               <div className="mb-8 inline-flex items-center gap-2 rounded-full px-4 py-1.5" style={{
@@ -320,7 +320,7 @@ export function DeckContent() {
               {/* Links */}
               <div className="space-y-4">
                 <a 
-                  href="https://github.com/Eduardo00082/Arcana" 
+                  href="https://github.com/Valthre/Arcana" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className={`group mx-auto flex w-fit items-center gap-3 rounded-xl px-5 py-3 ${
@@ -359,7 +359,7 @@ export function DeckContent() {
                   <span className="font-medium text-white">Luna</span>
                   <span className="text-gray-500">&</span>
                   <a 
-                    href="https://github.com/Eduardo00082" 
+                    href="https://github.com/Valthre" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className={`font-semibold text-arcana-cyan ${
@@ -368,7 +368,7 @@ export function DeckContent() {
                         : "transition-all duration-200 hover:scale-105 hover:text-arcana-purple"
                     }`}
                   >
-                    Eduardo00082
+                    Valthre
                   </a>
                 </div>
               </div>
